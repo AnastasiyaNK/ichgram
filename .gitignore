@@ -12,3 +12,6 @@ npm-debug.log*
 
 # Frontend build
 frontend/dist/
+
+
+/backend/config/firebaseKey.json
