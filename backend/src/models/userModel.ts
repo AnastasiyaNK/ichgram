@@ -2,13 +2,13 @@ import mongoose, { CallbackError, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IUser extends mongoose.Document {
-  _id: Types.ObjectId; 
+  _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;
   fullName: string;
-  bio: { type: String; default: "" };
-  profileImage: { type: String; default: "" };
+  bio?: string;
+  profileImage?: string;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema<IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     fullName: { type: String, required: true },
+    bio: { type: String, default: "" },
+    profileImage: { type: String, default: "" },
   },
   { timestamps: true }
 );
