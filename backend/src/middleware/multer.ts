@@ -6,7 +6,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
     return {
-      folder: "avatars", // Папка в Cloudinary
+      folder: "avatars", 
       public_id: `${Date.now()}-${file.originalname}`,
       resource_type: "auto", // важливо! дозволяє будь-який тип файлів
     };

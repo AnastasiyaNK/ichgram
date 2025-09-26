@@ -11,14 +11,19 @@ export const register = async (req: Request, res: Response) => {
     const user = new User({ name, email, password, fullName });
     await user.save();
 
-    const token = generateToken(user._id.toHexString()); // <-- toHexString()
+    const token = generateToken(user._id.toHexString());
 
-    res
-      .status(201)
-      .json({
-        token,
-        user: { id: user._id.toHexString(), name, email, fullName },
-      });
+    // Ставимо токен у httpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // ⚠️ true у продакшені (HTTPS)
+      sameSite: "lax", // або "none" якщо фронт і бек на різних доменах
+      maxAge: 1000 * 60 * 60 * 24, // 1 день
+    });
+
+    res.status(201).json({
+      user: { id: user._id.toHexString(), name, email, fullName },
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
@@ -36,8 +41,15 @@ export const login = async (req: Request, res: Response) => {
 
     const token = generateToken(user._id.toHexString());
 
+    // Ставимо токен у httpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+
     res.json({
-      token,
       user: {
         id: user._id.toHexString(),
         name: user.name,
