@@ -1,0 +1,68 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainRow {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+}
+.sidebar {
+  flex: 0 0 244px;
+  max-width: 244px;
+  border-right: 1px solid #e6e6e6;
+  /* position: relative; */
+  /* щоб при скролі залишалося меню  */
+  position: sticky;
+  top: 0;
+  height: 80vh;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+  background: var(--page-bg, #fff);
+}
+
+.footerWrap {
+  flex-shrink: 0;
+  border-top: 1px solid #e6e6e6;
+  background: #fff;
+  padding: 16px 24px;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    flex: 0 0 200px;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainRow {
+    flex-direction: column;
+  }
+  .sidebar {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    border-right: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar,
+  .content {
+    padding: 10px;
+  }
+  .footerWrap {
+    padding: 10px;
+  }
+}

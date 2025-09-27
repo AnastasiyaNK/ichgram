@@ -1,24 +1,41 @@
-import { useEffect, useState } from 'react'
 
-import './App.module.css'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  const [message, setMessage] = useState("");
+import HomePage from "./pages/HomePage/HomePage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import CreatePage from "./pages/CreatePage/CreatePage";
+import MessagesPage from "./pages/MessagesPages/MessagesPages";
+import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import ExplorePage from "./pages/ExplorePage/ExplorePage";
+import Layout from "./components/layouts/Layout";
 
-  useEffect(() => {
-    fetch("http://localhost:3000") // твій бекенд
-      .then(res => res.text())
-      .then(data => setMessage(data))
-      .catch(err => console.error(err));
-  }, []);
 
+
+const App: React.FC = () => {
   return (
-    <div>
-      <h1>React + TypeScript + Vite</h1>
-      <p>Message from backend: {message}</p>
-    </div>
+    <Routes>
+     
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/messages" element={<MessagesPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/create" element={<CreatePage />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
+      </Route>
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
+};
 
-}
+export default App;
 
-export default App
