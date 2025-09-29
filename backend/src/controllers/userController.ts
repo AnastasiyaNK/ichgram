@@ -2,6 +2,16 @@ import { Request, Response } from "express";
 import User from "../models/userModel.js";
 
 
+interface AuthenticatedRequest extends Request {
+  user?: string;
+  file?: Express.Multer.File & { path?: string };
+}
+
+
+
+
+
+
 
 export const getProfile = async (req: Request, res: Response) => {
   try {
@@ -13,10 +23,7 @@ export const getProfile = async (req: Request, res: Response) => {
   }
 };
 
-interface AuthenticatedRequest extends Request {
-  user?: string;
-  file?: Express.Multer.File & { path?: string };
-}
+
 
 export const updateProfile = async (
   req: AuthenticatedRequest,

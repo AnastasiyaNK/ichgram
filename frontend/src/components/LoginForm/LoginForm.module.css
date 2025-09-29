@@ -1,0 +1,130 @@
+.login {
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  max-width: 350px;
+  padding: 0 40px 25px;
+  display: flex;
+  flex-direction: column;
+
+}
+.logoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoTitle {
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  color: #737373;
+  margin-bottom: 36px;
+}
+
+.inputWrapper {
+  flex-direction: column;
+  display: flex;
+  gap: 7px;
+}
+
+.registerinput {
+  font-weight: 400;
+  font-size: 12px;
+  color: #737373;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  padding: 11px 8px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center;
+  color: #737373;
+  margin-top: 20px;
+}
+.signUpBtn {
+  border-radius: 8px;
+  width: 268px;
+  height: 32px;
+  background: #0095f6;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.29;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  margin-top: 20px;
+}
+.link {
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: center;
+  color: #00376b;
+  text-decoration: none;
+}
+.goLinkWrapper {
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  max-width: 350px;
+  padding: 26px 0px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+.goLinkText {
+  font-size: 14px;
+  line-height: 1.29;
+  text-align: center;
+  color: #000;
+}
+.goToLink {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.29;
+  text-align: center;
+  color: #0095f6;
+  text-decoration: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center; 
+  gap: 8px;
+  width: 100%;
+  margin-top: 22px;
+}
+
+.line {
+  flex: 1; 
+  height: 1px;
+  background-color: #dbdbdb;
+}
+
+.text {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: #737373;
+  white-space: nowrap;
+}
+.forgotPassWrapper{
+  margin-top: 59px;
+  display: flex;
+  justify-content: center;
+
+}
+.forgotPassLink{
+font-size: 12px;
+line-height: 133%;
+text-align: center;
+color: #00376b;
+text-decoration: none;
+}
+

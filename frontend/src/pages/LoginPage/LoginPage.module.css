@@ -1,0 +1,9 @@
+.loginContainer {
+  max-width: 1440px;
+  gap: 32px;
+  flex: wr;
+  display: flex;
+  justify-content: center;
+  padding-top: 85px;
+}
+

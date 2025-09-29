@@ -13,27 +13,35 @@ import SearchPage from "./pages/SearchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ExplorePage from "./pages/ExplorePage/ExplorePage";
 import Layout from "./components/layouts/Layout";
+import PrivateRoute from "./utils/PrivateRoute";
+import AppInitializer from "./utils/AppInitializer";
+
 
 
 
 const App: React.FC = () => {
   return (
-    <Routes>
-     
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/messages" element={<MessagesPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/create" element={<CreatePage />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <>
+      <AppInitializer>
+        <Routes>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/messages" element={<MessagesPage />} />
+              <Route path="/notifications" element={<NotificationsPage />} />
+              <Route path="/create" element={<CreatePage />} />
+              <Route path="/profile/:id" element={<ProfilePage />} />
+            </Route>
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </AppInitializer>
+    </>
   );
 };
 
