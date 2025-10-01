@@ -35,8 +35,8 @@ const RegisterForm: React.FC = () => {
 
    try {
      const res = await register({ name, fullName, email, password }).unwrap();
-     dispatch(setCredentials(res.user));
-     navigate(`/profile/${res.user.id}`);
+     dispatch(setCredentials({ ...res.user, id: res.user._id }));
+     navigate(`/home`);
    } catch (err: unknown) {
      const rtkError = err as RTKError;
      setError(rtkError.data?.message || "Registration failed");

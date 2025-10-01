@@ -7,6 +7,8 @@ export interface AuthResponse {
   user: User;
 }
 
+
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({

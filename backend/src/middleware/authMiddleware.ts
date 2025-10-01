@@ -10,14 +10,14 @@ interface AuthenticatedRequest extends Request {
 }
 
 const authMiddleware = (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  // 1️⃣ Пробуємо взяти токен з cookie
+
   let token = req.cookies?.token;
 
-  // 2️⃣ Якщо немає — пробуємо взяти з headers
+ 
   if (!token) {
     token = req.header("Authorization")?.replace("Bearer ", "");
   }

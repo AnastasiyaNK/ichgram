@@ -9,6 +9,8 @@ export interface IUser extends mongoose.Document {
   fullName: string;
   bio?: string;
   profileImage?: string;
+  followersCount: number;
+  followingCount: number;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -20,8 +22,13 @@ const userSchema = new mongoose.Schema<IUser>(
     fullName: { type: String, required: true },
     bio: { type: String, default: "" },
     profileImage: { type: String, default: "" },
+    followersCount: { type: Number, default: 0 },
+    followingCount: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  
+  }
 );
 
 userSchema.pre("save", async function (next) {

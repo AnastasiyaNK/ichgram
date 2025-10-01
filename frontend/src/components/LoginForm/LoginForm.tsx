@@ -23,7 +23,8 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const [login, { isLoading }] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,10 +32,8 @@ const LoginForm: React.FC = () => {
 
     try {
       const res = await login({ email, password }).unwrap();
-      // Зберігаємо користувача у Redux
-      dispatch(setCredentials(res.user));
-      // Переходимо в особистий кабінет
-      navigate(`/profile/${res.user.id}`);
+      dispatch(setCredentials({ ...res.user, id: res.user._id }));
+      navigate(`/home`);
     } catch (err: unknown) {
      const rtkError = err as RTKError;
      setError(rtkError.data?.message || "Login failed");

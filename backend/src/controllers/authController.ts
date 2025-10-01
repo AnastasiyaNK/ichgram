@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/userModel.js";
 import { generateToken } from "../utils/generateJWT.js";
-interface AuthenticatedRequest extends Request {
-  user?: string;
-  file?: Express.Multer.File & { path?: string };
-}
+
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -17,11 +14,11 @@ export const register = async (req: Request, res: Response) => {
 
     const token = generateToken(user._id.toHexString());
 
-    // Ставимо токен у httpOnly cookie
+
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // ⚠️ true у продакшені (HTTPS)
-      sameSite: "lax", // або "none" якщо фронт і бек на різних доменах
+      secure: false, 
+      sameSite: "lax", 
       maxAge: 1000 * 60 * 60 * 24, // 1 день
     });
 
@@ -45,7 +42,7 @@ export const login = async (req: Request, res: Response) => {
 
     const token = generateToken(user._id.toHexString());
 
-    // Ставимо токен у httpOnly cookie
+   
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
@@ -81,7 +78,7 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 export const getCurrentUser = async (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response
 ) => {
   try {

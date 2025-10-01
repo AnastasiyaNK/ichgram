@@ -1,34 +1,35 @@
+
 import { Request, Response } from "express";
 import User from "../models/userModel.js";
-
-
-interface AuthenticatedRequest extends Request {
-  user?: string;
-  file?: Express.Multer.File & { path?: string };
-}
-
-
-
-
-
-
+import Post from "../models/postModels.js";
 
 export const getProfile = async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.id).select("-password");
+    const userId = req.params.id;
+
+    const user = await User.findById(userId).select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
+
+  
+    const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      fullName: user.fullName,
+      bio: user.bio,
+      profileImage: user.profileImage,
+      followersCount: user.followersCount,
+      followingCount: user.followingCount,
+      postsCount: posts.length,
+      posts,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
 };
 
-
-
-export const updateProfile = async (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
+export const updateProfile = async (req: Request, res: Response) => {
   try {
     const userId = req.user;
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
@@ -41,13 +42,13 @@ export const updateProfile = async (
     if (bio) updateData.bio = bio;
 
     if (req.file && req.file.path) {
-      updateData.profileImage = req.file.path; // з Cloudinary прийде https://...
+      updateData.profileImage = req.file.path; // URL з Cloudinary
     }
-     
 
     const user = await User.findByIdAndUpdate(userId, updateData, {
       new: true,
     }).select("-password");
+
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json(user);
@@ -55,3 +56,4 @@ export const updateProfile = async (
     res.status(500).json({ message: "Server error", error });
   }
 };
+

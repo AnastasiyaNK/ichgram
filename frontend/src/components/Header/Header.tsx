@@ -8,11 +8,17 @@ import messagesIcon from "../../assets/images/messenger.svg";
 import notificationsIcon from "../../assets/images/notifications.svg";
 import profileIcon from "../../assets/images/profile.svg";
 import createIcon from '../../assets/images/create.svg'
+import type { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
 
 
 
 const Header = () => {
-    const userId = "1";
+   const user = useSelector((state: RootState) => state.auth.user);
+   const userId = user?.id;
+    
+     console.log("Header - User:", user);
+     console.log("Header - UserId:", userId);
   return (
     <div className={css.header}>
       <div className={css.logoWrapp}>
@@ -92,9 +98,16 @@ const Header = () => {
       </nav>
       <div className={css.profileWrapper}>
         <img className={css.icon} src={profileIcon} alt="" />
-        <NavLink
-          to={`/profile/${userId}`}
+        {/* <NavLink
+          to={user ? `/profile/${userId}` : "/login"}
           className={({ isActive }) => (isActive ? css.activeLink : css.link)}
+        >
+          Profile
+        </NavLink> */}
+        <NavLink
+          to={user ? `/profile/${user.id}` : "/login"}
+          className={({ isActive }) => (isActive ? css.activeLink : css.link)}
+          onClick={() => console.log("Profile link clicked, userId:", userId)}
         >
           Profile
         </NavLink>

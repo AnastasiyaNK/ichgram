@@ -1,30 +1,103 @@
-import { useEffect, useState } from "react";
+
+
 import { useGetCurrentUserQuery } from "../redux/apiSlice";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCredentials, logout } from "../redux/authSlice";
+import { setCredentials, logout, setInitialized } from "../redux/authSlice";
 import type { AppDispatch } from "../redux/store";
 
-const AppInitializer: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const AppInitializer: React.FC<Props> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [initialized, setInitialized] = useState(false);
-  const { data: user, error, isLoading } = useGetCurrentUserQuery();
+  const { data, error, isLoading } = useGetCurrentUserQuery(undefined, {
+    skip:
+      window.location.pathname === "/login" ||
+      window.location.pathname === "/register",
+  });
 
   useEffect(() => {
-    if (!isLoading) {
-      if (user) {
-        dispatch(setCredentials(user));
-      } else if (error) {
-        dispatch(logout());
-      }
-      setInitialized(true);
+    if (data) {
+      dispatch(setCredentials(data));
+      dispatch(setInitialized(true));
+    } else if (error && "status" in error && error.status === 401) {
+      dispatch(logout());
+      dispatch(setInitialized(true));
     }
-  }, [user, error, isLoading, dispatch]);
+  }, [data, error, dispatch]);
 
-  if (!initialized) return <p>Loading...</p>;
+  if (isLoading) {
+    return <div>Loading...</div>; // можна показати спінер
+  }
 
   return <>{children}</>;
 };
 
 export default AppInitializer;
+
+// import { useGetCurrentUserQuery } from "../redux/apiSlice";
+// import { useEffect } from "react";
+// import { useDispatch } from "react-redux";
+// import { setCredentials, logout, setInitialized } from "../redux/authSlice";
+// import type { AppDispatch } from "../redux/store";
+
+// interface Props {
+//   children: React.ReactNode;
+// }
+
+// const AppInitializer: React.FC<Props> = ({ children }) => {
+//   const dispatch = useDispatch<AppDispatch>();
+//   const { data, error, isLoading } = useGetCurrentUserQuery(undefined);
+
+//   useEffect(() => {
+//     if (data) {
+//       dispatch(setCredentials(data));
+//     } else if (error && "status" in error && error.status === 401) {
+//       dispatch(logout());
+//     }
+//     dispatch(setInitialized(true));
+//   }, [data, error, dispatch]);
+
+//   if (isLoading) return <div>Loading...</div>;
+
+//   return <>{children}</>;
+// };
+
+// export default AppInitializer;
+// AppInitializer.tsx
+// import { useGetCurrentUserQuery } from "../redux/apiSlice";
+// import { useEffect } from "react";
+// import { useDispatch } from "react-redux";
+// import { setCredentials, logout, setInitialized } from "../redux/authSlice";
+// import type { AppDispatch } from "../redux/store";
+
+// interface Props {
+//   children: React.ReactNode;
+// }
+
+// const AppInitializer: React.FC<Props> = ({ children }) => {
+//   const dispatch = useDispatch<AppDispatch>();
+//   const { data, error, isLoading } = useGetCurrentUserQuery(undefined);
+
+//   useEffect(() => {
+//     if (data) {
+//       dispatch(setCredentials(data));
+//     } else if (error && "status" in error && error.status === 401) {
+//       dispatch(logout());
+//     }
+//     dispatch(setInitialized(true));
+//   }, [data, error, dispatch]);
+//     if (isLoading) return <div>Loading...</div>;
+
+//   // Не блокуємо рендер дітей під час завантаження
+//   // Повертаємо children навіть під час isLoading
+//   return <>{children}</>;
+// };
+
+// export default AppInitializer;
+
+
+
+

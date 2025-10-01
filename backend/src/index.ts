@@ -5,6 +5,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import postRoutes from "./routes/postRoutes.js"
+import commentRoutes from "./routes/commentRoutes.js"
+import likeRoutes from "./routes/likeRoutes.js"
+import followRoutes from "./routes/followRoutes.js";
 
 
 dotenv.config();
@@ -29,7 +33,11 @@ app.get("/", (_, res) => {
 });
 
 app.use("/api/auth", authRoutes); 
-app.use("/api/user", userRoutes); 
+app.use("/api/user", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes)
+app.use("/likes", likeRoutes)
+app.use("/api/follow", followRoutes); 
 
 
 app.listen(PORT, async () => {

@@ -1,0 +1,72 @@
+.profile {
+  max-width: 953px;
+  margin-left: 91px;
+}
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.avatarWrapper {
+    max-width: 150px;
+    height: 150px;
+}
+.rightContainer {
+  max-width: 500px;
+  padding: 5px;
+  margin-left: 90px;
+}
+.editProfilWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.userName {
+  font-size: 19px;
+  line-height: 1.26;
+  color: #000;
+  margin-right: 20px;
+}
+.editBtn {
+  border-radius: 8px;
+  width: 168px;
+  height: 32px;
+  background: #efefef;
+  font-size: 14px;
+  line-height: 1.29;
+  text-align: center;
+  color: #000;
+}
+.statsWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.statNumber {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.12;
+  color: #000;
+  margin-right: 8px;
+}
+.statLabel {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.12;
+  color: #000;
+}
+
+.bioText {
+  font-size: 14px;
+  line-height: 1.29;
+  color: #000;
+  max-width: 440px;
+  margin-bottom: 18px;
+}
+.bioLink {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.29;
+  color: #00376b;
+}
+
