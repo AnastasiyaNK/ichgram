@@ -1,0 +1,92 @@
+
+.messageInputContainer {
+  position: relative;
+  background: white;
+  padding: 0px;
+}
+
+.emojiPickerWrapper {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  z-index: 1000;
+  margin-bottom: 4px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 8px 12px;
+  background: white;
+}
+
+.emojiButton {
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: #8e8e8e;
+  padding: 4px;
+  min-width: auto;
+  height: auto;
+}
+
+.emojiButton:hover {
+  color: #262626;
+  background: none;
+}
+
+.textArea {
+  flex: 1;
+  resize: none;
+  border: none;
+  background: none;
+  padding: 4px 0;
+  font-size: 14px;
+  line-height: 18px;
+  max-height: 36px;
+}
+
+.textArea:focus {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.textArea::placeholder {
+  color: #8e8e8e;
+}
+
+.sendButton {
+  border: none;
+  background: none;
+  color: #0095f6;
+  padding: 4px;
+  min-width: auto;
+  height: auto;
+  font-size: 16px;
+}
+
+.sendButton:hover:not(:disabled) {
+  color: #00376b;
+  background: none;
+}
+
+.sendButton:disabled {
+  color: #c7e5fb;
+  cursor: not-allowed;
+}
+
+/* Стилі для EmojiPicker */
+.messageInputContainer :global(.EmojiPickerReact) {
+  --epr-emoji-size: 20px;
+  --epr-category-label-height: 25px;
+}
+
+.messageInputContainer :global(.epr-preview) {
+  display: none;
+}

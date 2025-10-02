@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import User from "../models/userModel.js";
 import { generateToken } from "../utils/generateJWT.js";
 
-
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password, fullName } = req.body;
@@ -14,16 +13,24 @@ export const register = async (req: Request, res: Response) => {
 
     const token = generateToken(user._id.toHexString());
 
-
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, 
-      sameSite: "lax", 
+      secure: false,
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24, // 1 день
     });
 
     res.status(201).json({
-      user: { id: user._id.toHexString(), name, email, fullName },
+      user: {
+        id: user._id.toHexString(),
+        name: user.name,
+        email: user.email,
+        fullName: user.fullName,
+        bio: user.bio || "",
+        profileImage: user.profileImage || "",
+        followersCount: user.followersCount,
+        followingCount: user.followingCount,
+      },
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
@@ -42,7 +49,6 @@ export const login = async (req: Request, res: Response) => {
 
     const token = generateToken(user._id.toHexString());
 
-   
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
@@ -56,12 +62,17 @@ export const login = async (req: Request, res: Response) => {
         name: user.name,
         email: user.email,
         fullName: user.fullName,
+        bio: user.bio || "",
+        profileImage: user.profileImage || "",
+        followersCount: user.followersCount,
+        followingCount: user.followingCount,
       },
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
 
 
 export const logout = async (req: Request, res: Response) => {
@@ -77,10 +88,8 @@ export const logout = async (req: Request, res: Response) => {
   }
 };
 
-export const getCurrentUser = async (
-  req: Request,
-  res: Response
-) => {
+
+export const getCurrentUser = async (req: Request, res: Response) => {
   try {
     const userId = req.user;
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
@@ -93,6 +102,10 @@ export const getCurrentUser = async (
       name: user.name,
       email: user.email,
       fullName: user.fullName,
+      bio: user.bio || "",
+      profileImage: user.profileImage || "",
+      followersCount: user.followersCount,
+      followingCount: user.followingCount,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });

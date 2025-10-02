@@ -1,0 +1,236 @@
+/* CreatePostModal.module.css */
+/* .modal :global(.ant-modal-body) {
+  padding: 0;
+}
+
+.modalContent {
+  display: flex;
+  height: 500px;
+}
+
+.leftContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  border-right: 1px solid #f0f0f0;
+}
+
+.rightContainer {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageUploader {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+
+.imageUploader :global(.ant-upload) {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.uploadArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.uploadIcon {
+  font-size: 48px;
+  color: #1890ff;
+  margin-bottom: 16px;
+}
+
+.uploadText {
+  font-size: 16px;
+  color: #1890ff;
+  font-weight: 500;
+}
+
+.uploadedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.textArea {
+  resize: none;
+}
+
+
+@media (max-width: 768px) {
+  .modalContent {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .leftContainer {
+    height: 300px;
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+} */
+
+/* CreatePostModal.module.css */
+.modal :global(.ant-modal-content) {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.modal :global(.ant-modal-body) {
+  padding: 0;
+}
+
+.hederBox {
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.hederBox h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.wrapper {
+  display: flex;
+  height: 521px;
+}
+
+.leftBox {
+  width: 573px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.uploadArea {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.uploadIcon {
+  font-size: 48px;
+}
+
+.uploadedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.rightBox {
+  border-left: 1px solid #dbdbdb;
+  width: 340px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f0f0f0;
+}
+
+.userInfo p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.textarea {
+  flex: 1;
+  border: none;
+  resize: none;
+  padding: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.textarea::placeholder {
+  color: #999;
+}
+
+.messageInputContainer {
+  border-top: 1px solid #dbdbdb;
+  padding: 16px;
+}
+
+
+/* ... інші стилі залишаються без змін ... */
+
+.descriptionPreview {
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.descriptionPreview h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.previewText {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow-y: auto;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+}

@@ -15,15 +15,15 @@ import Layout from "./components/layouts/Layout";
 import PrivateRoute from "./utils/PrivateRoute";
 import AppInitializer from "./utils/AppInitializer";
 import "@ant-design/v5-patch-for-react-19";
+import EditProfil from "./components/EditProfil/EditProfil";
+
 
 const App: React.FC = () => {
   return (
     <Routes>
-  
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
 
-  
       <Route
         element={
           <AppInitializer>
@@ -40,6 +40,7 @@ const App: React.FC = () => {
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/create" element={<CreatePage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
+          <Route path="/profile/edit" element={<EditProfil/>} />
         </Route>
       </Route>
 

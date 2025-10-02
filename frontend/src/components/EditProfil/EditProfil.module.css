@@ -1,0 +1,47 @@
+.editProfil {
+  max-width: 630px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+.title{
+    margin-bottom: 44px;
+    font-weight: 700;
+font-size: 20px;
+line-height: 1.25;
+color: #000;
+}
+
+.profileHeaderConteiner {
+  background: #efefef;
+  padding: 16px;
+  display: flex;
+  border-radius: 20px;
+  margin-bottom: 33px;
+
+  
+}
+.useravatar {
+  width: 56px;
+  height: 56px;
+}
+.textName{
+font-weight: 700;
+font-size: 16px;
+line-height: 1.25;
+color: #000;
+}
+.text{
+    font-size: 14px;
+line-height: 1.29;
+color: #737373;
+
+}
+.profileHeaderWrapper {
+  margin-left: 16px;
+  max-width: 265px;
+}
+.uploadWrapper {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}

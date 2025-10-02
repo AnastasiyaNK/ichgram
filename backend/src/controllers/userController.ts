@@ -49,7 +49,8 @@ export const updateProfile = async (req: Request, res: Response) => {
       new: true,
     }).select("-password");
 
-    if (!user) return res.status(404).json({ message: "User not found" });
+      if (!user) return res.status(404).json({ message: "User not found" });
+       
 
     res.json(user);
   } catch (error) {
