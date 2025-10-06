@@ -14,11 +14,12 @@ export const getAllPosts = async (_: Request, res: Response) => {
   }
 };
 
+
 export const getUserPosts = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const posts = await Post.find({ author: id })
-      .populate("comments")
+      .populate("author", "name profileImage") 
       .populate("likes");
     res.json(posts);
   } catch (error) {
@@ -42,7 +43,13 @@ export const createPost = async (req: Request, res: Response) => {
     });
 
     await post.save();
-    res.status(201).json(post);
+
+    const populatedPost = await Post.findById(post._id)
+      .populate("author", "name profileImage")
+      .populate("comments")
+      .populate("likes");
+
+    res.status(201).json(populatedPost); 
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

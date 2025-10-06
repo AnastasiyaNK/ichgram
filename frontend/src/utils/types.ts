@@ -10,15 +10,28 @@ export interface User {
   followingCount: number;
 }
 
+// export interface IPost {
+//   _id: string;
+//   author: User;
+//   description: string;
+//   image: string;
+//   likes: string[];
+//   comments: IComment[];
+//   createdAt?: string;
+//   updatedAt?: string;
+// }
+
 export interface IPost {
   _id: string;
-  author: User;
-  description: string;
   image: string;
+  description?: string;
+  author: {
+    _id: string;
+    name: string;
+    profileImage?: string;
+  };
   likes: string[];
-  comments: IComment[];
   createdAt?: string;
-  updatedAt?: string;
 }
 
 export interface IComment {

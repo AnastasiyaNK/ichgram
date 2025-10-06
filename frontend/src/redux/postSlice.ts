@@ -28,17 +28,23 @@ export const postApiSlice = createApi({
       }),
       invalidatesTags: ["Posts"],
     }),
-    // Лайк/дизлайк поста
+
     likePost: builder.mutation<IPost, string>({
       query: (postId) => ({
-        url: `/posts/${postId}/like`,
+        url: `/likes/${postId}/like`, // З /api
         method: "POST",
       }),
       invalidatesTags: ["Posts"],
     }),
-    // Коментарі по посту
+
+    unlikePost: builder.mutation<IPost, string>({
+      query: (postId) => ({
+        url: `/likes/${postId}/like`, // Той самий endpoint для toggle
+        method: "POST",
+      }),
+      invalidatesTags: ["Posts"],
+    }),
     getComments: builder.query<IComment[], string>({
-      // postId
       query: (postId) => `/comments/${postId}`,
       providesTags: (result, _error, postId) =>
         result
@@ -48,12 +54,12 @@ export const postApiSlice = createApi({
             ]
           : [],
     }),
-    // Додати коментар
+
     addComment: builder.mutation<IComment, { postId: string; text: string }>({
       query: ({ postId, text }) => ({
-        url: `/comments/${postId}`,
+        url: `/comments`,
         method: "POST",
-        body: { text },
+        body: { postId, text }, // Додано postId в body
       }),
       invalidatesTags: (_result, _error, { postId }) => [
         { type: "Comments", id: postId },
@@ -69,4 +75,5 @@ export const {
   useLikePostMutation,
   useGetCommentsQuery,
   useAddCommentMutation,
+  useUnlikePostMutation
 } = postApiSlice;

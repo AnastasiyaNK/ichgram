@@ -6,12 +6,12 @@ import searchIcon from "../../assets/images/search-ich.svg";
 import exploreIcon from "../../assets/images/explore.svg";
 import messagesIcon from "../../assets/images/messenger.svg";
 import notificationsIcon from "../../assets/images/notifications.svg";
-import profileIcon from "../../assets/images/profile.svg";
 import createIcon from '../../assets/images/create.svg'
 import type { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import CreatePostModal from "../Modal/CreatePostModal";
+import placeholderAvatar from "../../assets/images/border-avatar.svg";
 
 
 
@@ -117,7 +117,7 @@ const Header = () => {
             </ul>
           </nav>
           <div className={css.profileWrapper}>
-            <img className={css.icon} src={profileIcon} alt="" />
+            <img className={css.avatar} src={user?.profileImage || placeholderAvatar} alt="" />
             <NavLink
               to={user ? `/profile/${user.id}` : "/login"}
               className={({ isActive }) =>

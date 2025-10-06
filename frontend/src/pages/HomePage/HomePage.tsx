@@ -1,57 +1,63 @@
+import React from "react";
+import { useGetPostsQuery } from "../../redux/postSlice";
+import styles from "./HomePage.module.css";
+import AllPostsFeed from "../../components/Posts/AllPostsFeed";
 
-// import PostFeed from "../../components/Posts/PostFeed";
-// import { useGetPostsQuery } from "../../redux/postSlice";
+const HomePage: React.FC = () => {
+  const {
+    data: posts = [],
+    isLoading: postsLoading,
+    isError: postsError,
+    refetch: refetchPosts
+  } = useGetPostsQuery();
 
+  const handleLike = (postId: string) => {
+    console.log("Liked post:", postId);
+  };
 
-// const HomePage = () => {
-//   const { data: posts = [] } = useGetPostsQuery();
+  const handleRefresh = () => {
+    refetchPosts();
+  };
 
-//   const handleLike = (postId: string) => {
-//     console.log("Liked post:", postId);
-//     // dispatch(toggleLike(postId))
-//   };
+  if (postsLoading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.loading}>Loading posts...</div>
+      </div>
+    );
+  }
 
-//   return (
-//     <div>
-//       <h1>HomePage</h1>
-//       <PostFeed posts={posts} handleLike={handleLike} />
-//     </div>
-//   );
-// };
-// export default HomePage;
-// HomePage.tsx
-
-// HomePage.tsx
-
-
-
-const HomePage = () => {
-//   const posts: IPost[] = [
-//   {
-//     _id: "68dc41cdaff33559d5ca869f",
-//     author: {
-//       _id: "68dc4189aff33559d5ca869c",
-//       name: "MAX",
-//       email: "max@example.com",       // додаємо обов’язкове поле
-//       fullName: "Maximus Test",       // додаємо обов’язкове поле
-//       profileImage:
-//         "https://res.cloudinary.com/dsti4smn3/image/upload/v1758816996/avatars/1758816996011-404c9f22522987a02212b04e8a017811.jpg.jpg",
-//     },
-//     description: "Мій перший пост з фото",
-//     image:
-//       "https://res.cloudinary.com/dsti4smn3/image/upload/v1759265228/posts/1759227496562-daffodil-7143756_640.jpg.jpg",
-//     likes: [],
-//     comments: [],
-//   },
-// ];
-//   const handleLike = (postId: string) => {
-//     console.log("Liked post:", postId);
-//   };
+  if (postsError) {
+    return (
+      <div className={styles.errorContainer}>
+        <div className={styles.error}>Error loading posts</div>
+        <button onClick={handleRefresh} className={styles.retryButton}>
+          Try again
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: 16 }}>
-      <h1>HomePage</h1>
-      
+    <div className={styles.allPostsPage}>
+      <div className={styles.postsGrid}>
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <AllPostsFeed 
+              key={post._id} 
+              post={post} 
+              onLike={handleLike}
+            />
+          ))
+        ) : (
+          <div className={styles.noPosts}>
+            <p>No posts available</p>
+            <button onClick={handleRefresh} className={styles.refreshButton}>
+              Refresh
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

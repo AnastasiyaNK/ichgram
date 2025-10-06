@@ -1,10 +1,12 @@
-
 import { Modal, Button, Upload, message } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
+import { CloudDownloadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import css from './CreatePostModal.module.css';
+import css from "./CreatePostModal.module.css";
 import { useState } from "react";
 import MessageInput from "../../ui/MessageInput";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import placeholderAvatar from "../../assets/images/border-avatar.svg";
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -12,11 +14,18 @@ interface CreatePostModalProps {
   onPostCreated?: () => void;
 }
 
-const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProps) => {
+const CreatePostModal = ({
+  isOpen,
+  onClose,
+  onPostCreated,
+}: CreatePostModalProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [caption, setCaption] = useState("");
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const currentUser = useSelector((state: RootState) => state.auth.user);
+
+    
 
   const handleCancel = () => {
     onClose();
@@ -33,43 +42,36 @@ const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProp
 
     try {
       setLoading(true);
-      
-      // Create form data for backend upload
+
       const formData = new FormData();
-      formData.append('image', uploadedFile);
-      formData.append('description', caption);
-      
-      // Upload to your backend (which will handle Cloudinary)
-      const response = await fetch('http://localhost:3000/api/posts', {
-        method: 'POST',
+      formData.append("image", uploadedFile);
+      formData.append("description", caption);
+
+      const response = await fetch("http://localhost:3000/api/posts", {
+        method: "POST",
         body: formData,
-        credentials: 'include', // include cookies for authentication
+        credentials: "include",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Backend error:", errorData);
-        throw new Error(`Upload failed: ${errorData.message || 'Unknown error'}`);
+        throw new Error(
+          `Upload failed: ${errorData.message || "Unknown error"}`
+        );
       }
 
-      const data = await response.json();
-      
-      console.log("Post created successfully:", data);
-      
+      await response.json(); 
       message.success("Post created successfully!");
       onPostCreated?.();
       handleCancel();
-      
     } catch (error) {
       console.error("Upload error:", error);
       let errorMessage = "Failed to create post";
-      
+
       if (error instanceof Error) {
         errorMessage = error.message;
-      } else if (typeof error === 'string') {
-        errorMessage = error;
       }
-      
+
       message.error(errorMessage);
     } finally {
       setLoading(false);
@@ -77,37 +79,32 @@ const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProp
   };
 
   const handleSend = (text: string) => {
-    console.log("Comment:", text);
-    // Add comment to caption
-    setCaption(prev => prev ? prev + "\n" + text : text);
+    setCaption((prev) => (prev ? prev + "\n" + text : text));
   };
 
   const beforeUpload = (file: File) => {
-    const isImage = file.type.startsWith('image/');
+    const isImage = file.type.startsWith("image/");
     if (!isImage) {
-      message.error('You can only upload image files!');
+      message.error("You can only upload image files!");
       return false;
     }
     const isLt5M = file.size / 1024 / 1024 < 5;
     if (!isLt5M) {
-      message.error('Image must be smaller than 5MB!');
+      message.error("Image must be smaller than 5MB!");
       return false;
     }
-    
-    // Store the file for later upload
+
     setUploadedFile(file);
-    
-    // Create temporary preview URL
     const objectUrl = URL.createObjectURL(file);
     setImageUrl(objectUrl);
-    
-    return false; // Return false to prevent automatic upload
+
+    return false;
   };
 
-  const handleChange: UploadProps['onChange'] = (info) => {
-    if (info.file.status === 'removed') {
+  const handleChange: UploadProps["onChange"] = (info) => {
+    if (info.file.status === "removed") {
       if (imageUrl) {
-        URL.revokeObjectURL(imageUrl); // Clean up object URL
+        URL.revokeObjectURL(imageUrl);
       }
       setImageUrl("");
       setUploadedFile(null);
@@ -116,7 +113,7 @@ const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProp
 
   const uploadButton = (
     <div className={css.uploadPlaceholder}>
-      <PlusOutlined className={css.uploadIcon} />
+      <CloudDownloadOutlined className={css.uploadIcon} />
       <div className={css.uploadText}>Upload photo</div>
     </div>
   );
@@ -129,21 +126,21 @@ const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProp
       width={914}
       centered
       className={css.modal}
+      closeIcon={null}
+      maskClosable={true}
     >
       {/* Header */}
       <div className={css.hederBox}>
-        <h2>Create new post</h2>
+        <h2 className={css.title}>Create new post</h2>
         <div className={css.headerButtons}>
-          <Button 
-            type="primary" 
+          <Button
+            type="text"
             onClick={handlePublish}
             loading={loading}
             disabled={!imageUrl}
+            className={css.shareButton}
           >
             Share
-          </Button>
-          <Button onClick={handleCancel}>
-            Cancel
           </Button>
         </div>
       </div>
@@ -172,12 +169,16 @@ const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProp
         <div className={css.rightBox}>
           {/* User Info */}
           <div className={css.userInfo}>
-            <div className={css.avatar} />
-            <p>Username</p>
+            <img
+              className={css.avatar}
+              src={currentUser?.profileImage || placeholderAvatar}
+              alt={currentUser?.name || "Username"}
+            />
+            <p>{currentUser?.name || "Username"}</p>
           </div>
 
-          {/* Text Area with Scroll */}
-          <textarea 
+
+          <textarea
             className={css.textarea}
             placeholder="Write a caption..."
             value={caption}
@@ -185,7 +186,7 @@ const CreatePostModal = ({ isOpen, onClose, onPostCreated }: CreatePostModalProp
             rows={8}
           />
 
-          {/* Message Input */}
+        
           <div className={css.messageInputContainer}>
             <MessageInput onSend={handleSend} />
           </div>

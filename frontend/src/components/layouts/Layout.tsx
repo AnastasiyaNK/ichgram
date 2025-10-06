@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
@@ -16,11 +17,17 @@ const Layout: React.FC = () => {
           <Outlet />
         </main>
       </div>
+
       <div className={css.footerWrap}>
-        <Footer />
+        <div className={css.footerContainer}>
+          <Footer />
+        </div>
       </div>
     </div>
   );
 };
 
 export default Layout;
+
+
+

@@ -16,7 +16,7 @@ const EditProfil: React.FC = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // Беремо дані з authSlice замість окремого запиту
+  
     const currentUser = useSelector((state: RootState) => state.auth.user);
     
      console.log("🔍 EditProfil - currentUser from Redux:", currentUser);
