@@ -6,7 +6,7 @@ import { useGetProfileQuery } from "../../redux/apiSlice";
 import { useGetUserPostsQuery } from "../../redux/postSlice";
 import type { RootState } from "../../redux/store";
 import css from "./ProfilePage.module.css";
-import placeholderAvatar from "../../assets/images/profile.svg";
+import placeholderAvatar from "../../assets/images/border-avatar.svg";
 import { Button, message } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import { logout } from "../../redux/authSlice";

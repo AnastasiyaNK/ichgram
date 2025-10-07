@@ -18,6 +18,7 @@ import "@ant-design/v5-patch-for-react-19";
 import EditProfil from "./components/EditProfil/EditProfil";
 
 
+
 const App: React.FC = () => {
   return (
     <Routes>
@@ -40,7 +41,8 @@ const App: React.FC = () => {
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/create" element={<CreatePage />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
-          <Route path="/profile/edit" element={<EditProfil/>} />
+          <Route path="/profile/edit" element={<EditProfil />} />
+         
         </Route>
       </Route>
 

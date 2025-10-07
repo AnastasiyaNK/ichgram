@@ -20,11 +20,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
       setCredentials: (state, action: PayloadAction<User>) => {
-          console.log("authSlice - Setting user:", action.payload);
       state.user = action.payload;
     },
       logout: (state) => {
-        console.log("authSlice - Logging out");
       state.user = null;
     },
     setInitialized: (state, action: PayloadAction<boolean>) => {

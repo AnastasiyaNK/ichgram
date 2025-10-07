@@ -1,7 +1,8 @@
 import React from "react";
 import { useGetPostsQuery } from "../../redux/postSlice";
-import styles from "./HomePage.module.css";
+import css from "./HomePage.module.css";
 import AllPostsFeed from "../../components/Posts/AllPostsFeed";
+import type { IPost } from "../../utils/types";
 
 const HomePage: React.FC = () => {
   const {
@@ -11,9 +12,14 @@ const HomePage: React.FC = () => {
     refetch: refetchPosts
   } = useGetPostsQuery();
 
-  const handleLike = (postId: string) => {
-    console.log("Liked post:", postId);
-  };
+
+  const sortedPosts = [...posts].sort((a: IPost, b: IPost) => {
+    const dateA = new Date(a.createdAt || 0).getTime();
+    const dateB = new Date(b.createdAt || 0).getTime();
+    return dateB - dateA; 
+  });
+
+
 
   const handleRefresh = () => {
     refetchPosts();
@@ -21,17 +27,17 @@ const HomePage: React.FC = () => {
 
   if (postsLoading) {
     return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.loading}>Loading posts...</div>
+      <div className={css.loadingContainer}>
+        <div className={css.loading}>Loading posts...</div>
       </div>
     );
   }
 
   if (postsError) {
     return (
-      <div className={styles.errorContainer}>
-        <div className={styles.error}>Error loading posts</div>
-        <button onClick={handleRefresh} className={styles.retryButton}>
+      <div className={css.errorContainer}>
+        <div className={css.error}>Error loading posts</div>
+        <button onClick={handleRefresh} className={css.retryButton}>
           Try again
         </button>
       </div>
@@ -39,20 +45,20 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className={styles.allPostsPage}>
-      <div className={styles.postsGrid}>
-        {posts.length > 0 ? (
-          posts.map((post) => (
+    <div className={css.allPostsPage}>
+      <div className={css.postsGrid}>
+        {sortedPosts.length > 0 ? (
+          sortedPosts.map((post) => (
             <AllPostsFeed 
               key={post._id} 
               post={post} 
-              onLike={handleLike}
+             
             />
           ))
         ) : (
-          <div className={styles.noPosts}>
+          <div className={css.noPosts}>
             <p>No posts available</p>
-            <button onClick={handleRefresh} className={styles.refreshButton}>
+            <button onClick={handleRefresh} className={css.refreshButton}>
               Refresh
             </button>
           </div>
@@ -63,4 +69,3 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-

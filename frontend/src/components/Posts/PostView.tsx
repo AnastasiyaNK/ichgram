@@ -7,8 +7,12 @@ import {
 } from "../../redux/postSlice";
 import MessageInput from "../../ui/MessageInput";
 import placeholderAvatar from "../../assets/images/border-avatar.svg";
+import heart from "../../assets/images/heart-ich.svg";
+import redHeartIcon from "../../assets/images/heart_red.png";
+import commentIcon from "../../assets/images/comment.svg";
 import css from "./PostView.module.css";
 import type { IComment, IPost, User } from "../../utils/types";
+import { getTimeAgo } from "../../utils/time";
 
 interface PostViewProps {
   post: IPost | null;
@@ -49,15 +53,15 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
     }
   };
 
-  const handleLike = async () => {
+  const handleLikeToggle = async () => {
     if (!post || !currentUser) return;
     try {
       if (isLiked) {
         await unlikePost(post._id).unwrap();
-        setLikeCount((p) => p - 1);
+        setLikeCount((prev) => prev - 1);
       } else {
         await likePost(post._id).unwrap();
-        setLikeCount((p) => p + 1);
+        setLikeCount((prev) => prev + 1);
       }
       setIsLiked(!isLiked);
     } catch (err) {
@@ -106,6 +110,9 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
                       {post.author?.name}
                     </span>
                     <p className={css.commentText}>{post.description}</p>
+                    <span className={css.commentTime}>
+                      {getTimeAgo(post.createdAt)}
+                    </span>
                   </div>
                 </div>
               )}
@@ -126,10 +133,17 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
                         alt={comment.author?.name || comment.user?.name}
                       />
                       <div className={css.commentContent}>
-                        <span className={css.commentAuthor}>
-                          {comment.author?.name || comment.user?.name}
+                        <div className={css.commentHeader}>
+                          <span className={css.commentAuthor}>
+                            {comment.author?.name || comment.user?.name}
+                          </span>
+                          <p className={css.commentText}>{comment.text}</p>
+        
+                        </div>
+                        <span className={css.commentTime}>
+                          {getTimeAgo(comment.createdAt)}
                         </span>
-                        <p className={css.commentText}>{comment.text}</p>
+        
                       </div>
                     </div>
                   ))
@@ -140,20 +154,28 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
             </div>
 
             <div className={css.actionsSection}>
-              <div className={css.actions}>
-                <button
-                  className={`${css.likeButton} ${isLiked ? css.liked : ""}`}
-                  onClick={handleLike}
-                >
-                  {isLiked ? "❤️" : "🤍"}
+              <div className={css.postActions}>
+                <button className={css.likeButton} onClick={handleLikeToggle}>
+                  <img
+                    src={isLiked ? redHeartIcon : heart}
+                    alt="like"
+                    className={css.likeIcon}
+                  />
                 </button>
-                <span className={css.likeCount}>{likeCount} likes</span>
+                <button className={css.commentButton}>
+                  <img
+                    src={commentIcon}
+                    alt="comment"
+                    className={css.commentIcon}
+                  />
+                </button>
               </div>
-              <div className={css.postDate}>
-                {post.createdAt
-                  ? new Date(post.createdAt).toLocaleDateString()
-                  : ""}
+
+              <div className={css.likesCount}>
+                <p>{likeCount} likes</p>
               </div>
+
+              <div className={css.postDate}>{getTimeAgo(post.createdAt)}</div>
             </div>
 
             <div className={css.inputContainer}>
