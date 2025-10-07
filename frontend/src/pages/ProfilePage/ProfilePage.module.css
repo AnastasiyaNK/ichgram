@@ -1,18 +1,45 @@
-.profile {
-  max-width: 953px;
-  margin-left: 91px;
+.profilePage {
+  max-width: 935px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
 
- 
-}
-.container {
+.loadingContainer,
+.errorContainer {
   display: flex;
-  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
 }
-.mainAvatar {
-    max-width: 150px;
-    height: 150px;
-     border-radius: 50%;
-     background: linear-gradient(
+
+.loading {
+  font-size: 16px;
+  color: #8e8e8e;
+}
+
+.error {
+  font-size: 16px;
+  color: #ed4956;
+}
+
+.profileHeader {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 44px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.avatarSection {
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+   background: linear-gradient(
         45deg,
         #405de6,
         #5851db,
@@ -25,179 +52,201 @@
         #fcaf45,
         #ffdc80
     );
-    padding: 3px;
+    padding: 1px;
+}
 
+.profileInfo {
+  flex: 1;
 }
-.rightContainer {
-  max-width: 500px;
-  padding: 5px;
-  margin-left: 90px;
-}
-.editProfilWrapper {
+
+.usernameSection {
   display: flex;
   align-items: center;
-  margin-bottom: 28px;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
-.userName {
-  font-size: 19px;
-  line-height: 1.26;
-  color: #000;
-  margin-right: 20px;
+
+.username {
+  font-size: 28px;
+  font-weight: 300;
+  color: #262626;
+  margin: 0;
 }
-.editBtn {
+
+.editButton {
+  background: transparent;
+  border: 1px solid #dbdbdb;
   border-radius: 8px;
-  width: 168px;
-  height: 32px;
-  background: #efefef;
-  font-size: 14px;
-  line-height: 1.29;
-  text-align: center;
-  color: #000;
-  border: none;
+  padding: 5px 9px;
+ 
+  cursor: pointer;
+  font-weight: 600;
+font-size: 14px;
+line-height: 1.29;
+text-align: center;
+color: #000;
 }
-.statsWrapper {
+
+
+.actionButtons {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+.followButton {
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.followButton:hover {
+  background-color: #007acc;
+}
+
+.following {
+  background-color: #efefef;
+  color: #262626;
+  border: 1px solid #dbdbdb;
+}
+
+.following:hover {
+  background-color: #e0e0e0;
+}
+
+
+.messageButton {
+  background-color: #efefef;
+  color: #262626;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.messageButton:hover {
+  background-color: #e0e0e0;
+}
+
+.statsSection {
+  display: flex;
+  gap: 40px;
   margin-bottom: 20px;
 }
 
-.statNumber {
+.stat {
+  font-size: 16px;
+  color: #262626;
+}
+
+.bioSection {
+  line-height: 1.5;
+}
+
+.fullName {
   font-weight: 600;
   font-size: 16px;
-  line-height: 1.12;
-  color: #000;
-  margin-right: 8px;
+  margin: 0 0 5px 0;
+  color: #262626;
 }
-.statLabel {
-  font-weight: 600;
+
+.bio {
   font-size: 16px;
-  line-height: 1.12;
-  color: #000;
+  margin: 0;
+  color: #262626;
 }
 
-.bioText {
-  font-size: 14px;
-  line-height: 1.29;
-  color: #000;
-  max-width: 440px;
-  margin-bottom: 18px;
+.postsSection {
+  margin-top: 30px;
 }
-.bioLink {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 1.29;
-  color: #00376b;
-}
-
-
-
-.createPostWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 24px;
-  margin: 32px auto;
-  max-width: 300px;
-  border: 2px dashed #d9d9d9;
-  border-radius: 12px;
-  background-color: #fafafa;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.createPostWrapper:hover {
-  border-color: #1890ff;
-  background-color: #f0f8ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-}
-
-.link {
-  font-size: 16px;
-  font-weight: 500;
-  color: #000;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.createPostWrapper:hover .link {
-  color: #1890ff;
-}
-
 
 .postsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 6px;
-  margin-top: 55px;
-  min-height: 200px; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
 }
-.postsGrid:has(.createPostWrapper) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.createPostWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 24px 40px;
-  border: 2px dashed #d9d9d9;
-  background-color: #fafafa;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
-  min-width: 300px;
-}
-
-.createPostWrapper:hover {
-  border-color: #1890ff;
-  background-color: #f0f8ff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-}
-
-.link {
-  font-size: 16px;
-  font-weight: 500;
-  color: #000;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.createPostWrapper:hover .link {
-  color: #1890ff;
-}
-
 
 .postItem {
   aspect-ratio: 1;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
-.postItem:hover {
-  transform: scale(1.03);
 }
 
 .postItem img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
 }
+
+.createPostWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #dbdbdb;
+  padding: 40px;
+  cursor: pointer;
+  color: #8e8e8e;
+  text-align: center;
+}
+
+.createPostWrapper:hover {
+  background-color: #f8f8f8;
+}
+
+.createPostWrapper .icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.noPosts {
+  text-align: center;
+  padding: 40px;
+  color: #8e8e8e;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .profileHeader {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .usernameSection {
+    justify-content: center;
+  }
+
+  .statsSection {
+    justify-content: center;
+  }
+
+  .postsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .actionButtons {
+    justify-content: center;
+  }
+}
+
 
 
 

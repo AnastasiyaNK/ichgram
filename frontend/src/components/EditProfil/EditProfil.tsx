@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector} from "react-redux";
 import css from "./EditProfil.module.css";
-import { Button, Form, Input, Upload, message } from "antd";
+import { Button, Form, Input, Spin, Upload, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useUpdateProfileMutation } from "../../redux/apiSlice";
 import type { UploadProps } from "antd";
@@ -19,13 +19,10 @@ const EditProfil: React.FC = () => {
   
     const currentUser = useSelector((state: RootState) => state.auth.user);
     
-     console.log("🔍 EditProfil - currentUser from Redux:", currentUser);
-     console.log("🔍 EditProfil - profileImage:", currentUser?.profileImage);
-     console.log("🔍 EditProfil - bio:", currentUser?.bio);
+   
 
   React.useEffect(() => {
     if (currentUser) {
-      console.log("🔄 Current user data loaded:", currentUser);
       form.setFieldsValue({
         name: currentUser.name,
         bio: currentUser.bio || "",
@@ -53,7 +50,7 @@ const EditProfil: React.FC = () => {
 
   const onFinish = async (values: { name: string; bio: string }) => {
     try {
-      console.log("📤 Sending update with values:", values);
+     
 
       const formData = new FormData();
       formData.append("name", values.name);
@@ -66,8 +63,8 @@ const EditProfil: React.FC = () => {
       await updateProfile(formData).unwrap();
       message.success("Profile updated successfully!");
 
-      // Переходимо на профіль - дані вже оновлені в authSlice
-      navigate(`/profile/${currentUser?.id}`);
+     
+      navigate(`/profile/${currentUser?._id}`);
     } catch (error) {
       console.error("❌ Update profile error:", error);
       message.error("Failed to update profile");
@@ -75,7 +72,7 @@ const EditProfil: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate(`/profile/${currentUser?.id}`);
+    navigate(`/profile/${currentUser?._id}`);
   };
 
   const uploadProps: UploadProps = {
@@ -85,10 +82,9 @@ const EditProfil: React.FC = () => {
   };
 
   if (!currentUser) {
-    return <p>Loading...</p>;
+    return <Spin size="large" />;
   }
 
-  console.log("🎨 Rendering with currentUser:", currentUser);
 
   return (
     <div className={css.editProfil}>

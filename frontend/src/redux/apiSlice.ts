@@ -2,18 +2,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { User } from "../utils/types";
 
-
 export interface AuthResponse {
   user: User;
 }
-
-
 
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api",
-    credentials: "include", // важливо для httpOnly cookie
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     register: builder.mutation<
@@ -34,7 +31,7 @@ export const apiSlice = createApi({
       }),
     }),
     getProfile: builder.query<User, string>({
-      query: (id) => `/user/profile/${id}`,
+      query: (userId) => `/user/profile/${userId}`,
     }),
     updateProfile: builder.mutation<User, FormData>({
       query: (formData) => ({

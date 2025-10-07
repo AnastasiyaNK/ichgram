@@ -1,5 +1,3 @@
-// src/util/time.ts
-
 export const getTimeAgo = (date: string | Date | null | undefined): string => {
   if (!date) return "N/A";
 

@@ -3,7 +3,6 @@ import FollowModel from "../models/followModel.js";
 import User from "../models/userModel.js";
 
 
-// Follow
 export const followUser = async (req: Request, res: Response) => {
   try {
     const follower = req.user;
@@ -21,7 +20,7 @@ export const followUser = async (req: Request, res: Response) => {
 
     await FollowModel.create({ follower, following: userId });
 
-    // update counts
+   
     await User.findByIdAndUpdate(follower, { $inc: { followingCount: 1 } });
     await User.findByIdAndUpdate(userId, { $inc: { followersCount: 1 } });
 
@@ -31,7 +30,6 @@ export const followUser = async (req: Request, res: Response) => {
   }
 };
 
-// Unfollow
 export const unfollowUser = async (
   req: Request,
   res: Response
@@ -49,11 +47,28 @@ export const unfollowUser = async (
 
     await follow.deleteOne();
 
-    // update counts
+
     await User.findByIdAndUpdate(follower, { $inc: { followingCount: -1 } });
     await User.findByIdAndUpdate(userId, { $inc: { followersCount: -1 } });
 
     res.json({ message: "Unfollowed successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+export const getFollowStatus = async (req: Request, res: Response) => {
+  try {
+    const currentUser = req.user;
+    const { userId } = req.params;
+
+    if (!currentUser) return res.status(401).json({ message: "Unauthorized" });
+
+    const isFollowing = !!(await FollowModel.findOne({
+      follower: currentUser,
+      following: userId,
+    }));
+
+    res.json({ isFollowing });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

@@ -1,7 +1,5 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { IPost } from "../utils/types";
-import type { IComment } from "../utils/types";
+import type { IPost, IComment } from "../utils/types";
 
 export const postApiSlice = createApi({
   reducerPath: "postApi",
@@ -11,15 +9,25 @@ export const postApiSlice = createApi({
   }),
   tagTypes: ["Posts", "Comments"],
   endpoints: (builder) => ({
-    // Отримати всі пости
     getPosts: builder.query<IPost[], void>({
       query: () => "/posts",
       providesTags: ["Posts"],
     }),
+
     getUserPosts: builder.query<IPost[], string>({
-      query: (userId) => `/posts/user/${userId}`, // бек має повертати тільки пости цього користувача
+      query: (userId) => `/posts/user/${userId}`,
+      providesTags: (result, _error, userId) =>
+        result
+          ? [
+              ...result.map((post) => ({
+                type: "Posts" as const,
+                id: post._id,
+              })),
+              { type: "Posts", id: `user-${userId}` },
+            ]
+          : [{ type: "Posts", id: `user-${userId}` }],
     }),
-    // Створити пост
+
     createPost: builder.mutation<IPost, FormData>({
       query: (formData) => ({
         url: "/posts",
@@ -31,19 +39,24 @@ export const postApiSlice = createApi({
 
     likePost: builder.mutation<IPost, string>({
       query: (postId) => ({
-        url: `/likes/${postId}/like`, // З /api
+        url: `/likes/${postId}/like`,
         method: "POST",
       }),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: (_result, _error, postId) => [
+        { type: "Posts", id: postId },
+      ],
     }),
 
     unlikePost: builder.mutation<IPost, string>({
       query: (postId) => ({
-        url: `/likes/${postId}/like`, // Той самий endpoint для toggle
+        url: `/likes/${postId}/like`,
         method: "POST",
       }),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: (_result, _error, postId) => [
+        { type: "Posts", id: postId },
+      ],
     }),
+
     getComments: builder.query<IComment[], string>({
       query: (postId) => `/comments/${postId}`,
       providesTags: (result, _error, postId) =>
@@ -52,14 +65,14 @@ export const postApiSlice = createApi({
               ...result.map((c) => ({ type: "Comments" as const, id: c._id })),
               { type: "Comments", id: postId },
             ]
-          : [],
+          : [{ type: "Comments", id: postId }],
     }),
 
     addComment: builder.mutation<IComment, { postId: string; text: string }>({
       query: ({ postId, text }) => ({
         url: `/comments`,
         method: "POST",
-        body: { postId, text }, // Додано postId в body
+        body: { postId, text },
       }),
       invalidatesTags: (_result, _error, { postId }) => [
         { type: "Comments", id: postId },
@@ -73,7 +86,8 @@ export const {
   useGetUserPostsQuery,
   useCreatePostMutation,
   useLikePostMutation,
+  useUnlikePostMutation,
   useGetCommentsQuery,
   useAddCommentMutation,
-  useUnlikePostMutation
 } = postApiSlice;
+

@@ -145,9 +145,9 @@ const CreatePostModal = ({
         </div>
       </div>
 
-      {/* Main Content */}
+  
       <div className={css.wrapper}>
-        {/* Left Box - Image Upload */}
+      
         <div className={css.leftBox}>
           {imageUrl ? (
             <img src={imageUrl} alt="upload" className={css.uploadedImage} />
@@ -165,9 +165,9 @@ const CreatePostModal = ({
           )}
         </div>
 
-        {/* Right Box - Content */}
+    
         <div className={css.rightBox}>
-          {/* User Info */}
+      
           <div className={css.userInfo}>
             <img
               className={css.avatar}

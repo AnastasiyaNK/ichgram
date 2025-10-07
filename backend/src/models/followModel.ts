@@ -14,7 +14,6 @@ const followSchema = new Schema<IFollow>(
   { timestamps: { createdAt: true, updatedAt: false } }
 );
 
-// Запретим дубли
 followSchema.index({ follower: 1, following: 1 }, { unique: true });
 
 const FollowModel = mongoose.model<IFollow>("Follow", followSchema);

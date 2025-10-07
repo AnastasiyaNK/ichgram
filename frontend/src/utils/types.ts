@@ -1,25 +1,16 @@
 export interface User {
-  id?: string; 
-  _id?: string;
+  _id: string;
+  id?: string;
   name: string;
-  email: string;
-  fullName: string;
+  email?: string;
+  fullName?: string;
   bio?: string;
   profileImage?: string;
-  followersCount: number;
-  followingCount: number;
+  followersCount?: number;
+  followingCount?: number;
 }
 
-// export interface IPost {
-//   _id: string;
-//   author: User;
-//   description: string;
-//   image: string;
-//   likes: string[];
-//   comments: IComment[];
-//   createdAt?: string;
-//   updatedAt?: string;
-// }
+
 
 export interface IPost {
   _id: string;
@@ -36,7 +27,7 @@ export interface IPost {
 
 export interface IComment {
   _id: string;
-  post: string;
+  post: string; 
   user: User;
   author: User;
   text: string;

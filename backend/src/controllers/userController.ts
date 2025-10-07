@@ -3,31 +3,31 @@ import { Request, Response } from "express";
 import User from "../models/userModel.js";
 import Post from "../models/postModels.js";
 
-export const getProfile = async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.id;
+// export const getProfile = async (req: Request, res: Response) => {
+//   try {
+//     const userId = req.params.id;
 
-    const user = await User.findById(userId).select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
+//     const user = await User.findById(userId).select("-password");
+//     if (!user) return res.status(404).json({ message: "User not found" });
 
   
-    const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
+//     const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
 
-    res.json({
-      _id: user._id,
-      name: user.name,
-      fullName: user.fullName,
-      bio: user.bio,
-      profileImage: user.profileImage,
-      followersCount: user.followersCount,
-      followingCount: user.followingCount,
-      postsCount: posts.length,
-      posts,
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error });
-  }
-};
+//     res.json({
+//       _id: user._id,
+//       name: user.name,
+//       fullName: user.fullName,
+//       bio: user.bio,
+//       profileImage: user.profileImage,
+//       followersCount: user.followersCount,
+//       followingCount: user.followingCount,
+//       postsCount: posts.length,
+//       posts,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error });
+//   }
+// };
 
 export const updateProfile = async (req: Request, res: Response) => {
   try {
@@ -64,7 +64,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
     console.log("Getting public profile for user ID:", userId);
 
     const user = await User.findById(userId)
-      .select("-password -email") // Виключаємо конфіденційні поля
+      .select("-password -email") 
       .lean();
 
     if (!user) {

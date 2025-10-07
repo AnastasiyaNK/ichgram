@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import User from "../models/userModel.js";
 import { generateToken } from "../utils/generateJWT.js";
 
+
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password, fullName } = req.body;
+
     const existingUser = await User.findOne({ $or: [{ email }, { name }] });
     if (existingUser) return res.status(400).json({ message: "User exists" });
 
@@ -17,12 +19,12 @@ export const register = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: false,
       sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24, // 1 день
+      maxAge: 1000 * 60 * 60 * 24, 
     });
 
     res.status(201).json({
       user: {
-        id: user._id.toHexString(),
+        _id: user._id.toHexString(), 
         name: user.name,
         email: user.email,
         fullName: user.fullName,
@@ -37,9 +39,11 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
+
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
@@ -58,7 +62,7 @@ export const login = async (req: Request, res: Response) => {
 
     res.json({
       user: {
-        id: user._id.toHexString(),
+        _id: user._id.toHexString(), 
         name: user.name,
         email: user.email,
         fullName: user.fullName,
@@ -74,12 +78,11 @@ export const login = async (req: Request, res: Response) => {
 };
 
 
-
 export const logout = async (req: Request, res: Response) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: false, 
+      secure: false,
       sameSite: "lax",
     });
     res.json({ message: "Logged out successfully" });
@@ -98,7 +101,7 @@ export const getCurrentUser = async (req: Request, res: Response) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({
-      id: user._id.toHexString(),
+      _id: user._id.toHexString(), 
       name: user.name,
       email: user.email,
       fullName: user.fullName,
