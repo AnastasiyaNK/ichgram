@@ -9,6 +9,7 @@ import postRoutes from "./routes/postRoutes.js"
 import commentRoutes from "./routes/commentRoutes.js"
 import likeRoutes from "./routes/likeRoutes.js"
 import followRoutes from "./routes/followRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 
 dotenv.config();
@@ -37,7 +38,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes)
 app.use("/api/likes", likeRoutes);
-app.use("/api/follow", followRoutes); 
+app.use("/api/follow", followRoutes);
+app.use("/api/notifications", notificationRoutes); 
 
 
 app.listen(PORT, async () => {

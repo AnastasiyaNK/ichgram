@@ -9,6 +9,7 @@ import { useUpdateProfileMutation } from "../../redux/apiSlice";
 import type { UploadProps } from "antd";
 import type { RcFile } from "antd/es/upload";
 import type { RootState } from "../../redux/store";
+import { getUserAvatar } from "../../utils/avatarGenerator";
 
 const EditProfil: React.FC = () => {
   const navigate = useNavigate();
@@ -80,10 +81,12 @@ const EditProfil: React.FC = () => {
     showUploadList: false,
     accept: "image/*",
   };
+  
 
   if (!currentUser) {
     return <Spin size="large" />;
   }
+   const userAvatar = getUserAvatar(currentUser);
 
 
   return (
@@ -93,8 +96,11 @@ const EditProfil: React.FC = () => {
       <div className={css.profileHeaderConteiner}>
         <img
           className={css.useravatar}
-          src={currentUser.profileImage || "/assets/images/profile.svg"}
+          src={userAvatar} 
           alt="Avatar"
+          onError={(e) => {
+            e.currentTarget.src = "/assets/images/profile.svg";
+          }}
         />
         <div className={css.profileHeaderWrapper}>
           <p className={css.textName}>{currentUser.name}</p>

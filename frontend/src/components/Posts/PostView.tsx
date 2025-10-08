@@ -13,6 +13,7 @@ import commentIcon from "../../assets/images/comment.svg";
 import css from "./PostView.module.css";
 import type { IComment, IPost, User } from "../../utils/types";
 import { getTimeAgo } from "../../utils/time";
+import { getUserAvatar } from "../../utils/avatarGenerator"; // Додайте цей імпорт
 
 interface PostViewProps {
   post: IPost | null;
@@ -71,6 +72,9 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
 
   if (!post) return null;
 
+  const authorAvatar = getUserAvatar(post.author);
+
+
   return (
     <div className={css.overlay} onClick={onClose}>
       <div className={css.container} onClick={(e) => e.stopPropagation()}>
@@ -84,6 +88,9 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
               src={post.image}
               alt={post.description || "Post"}
               className={css.postImage}
+              onError={(e) => {
+                e.currentTarget.src = placeholderAvatar;
+              }}
             />
           </div>
 
@@ -91,8 +98,11 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
             <div className={css.authorInfo}>
               <img
                 className={css.avatar}
-                src={post.author?.profileImage || placeholderAvatar}
+                src={authorAvatar}
                 alt={post.author?.name}
+                onError={(e) => {
+                  e.currentTarget.src = placeholderAvatar;
+                }}
               />
               <span className={css.authorName}>{post.author?.name}</span>
             </div>
@@ -102,8 +112,11 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
                 <div className={css.postDescription}>
                   <img
                     className={css.commentAvatar}
-                    src={post.author?.profileImage || placeholderAvatar}
+                    src={authorAvatar}
                     alt={post.author?.name}
+                    onError={(e) => {
+                      e.currentTarget.src = placeholderAvatar;
+                    }}
                   />
                   <div className={css.commentContent}>
                     <span className={css.commentAuthor}>
@@ -121,32 +134,34 @@ const PostView = ({ post, currentUser, onClose }: PostViewProps) => {
                 {commentsLoading ? (
                   <div className={css.loading}>Loading comments...</div>
                 ) : localComments.length > 0 ? (
-                  localComments.map((comment) => (
-                    <div key={comment._id} className={css.comment}>
-                      <img
-                        className={css.commentAvatar}
-                        src={
-                          comment.author?.profileImage ||
-                          comment.user?.profileImage ||
-                          placeholderAvatar
-                        }
-                        alt={comment.author?.name || comment.user?.name}
-                      />
-                      <div className={css.commentContent}>
-                        <div className={css.commentHeader}>
-                          <span className={css.commentAuthor}>
-                            {comment.author?.name || comment.user?.name}
+                  localComments.map((comment) => {
+                    const commentAuthor = comment.author || comment.user;
+                    const commentAvatar = getUserAvatar(commentAuthor);
+                    
+                    return (
+                      <div key={comment._id} className={css.comment}>
+                        <img
+                          className={css.commentAvatar}
+                          src={commentAvatar}
+                          alt={commentAuthor?.name}
+                          onError={(e) => {
+                            e.currentTarget.src = placeholderAvatar;
+                          }}
+                        />
+                        <div className={css.commentContent}>
+                          <div className={css.commentHeader}>
+                            <span className={css.commentAuthor}>
+                              {commentAuthor?.name}
+                            </span>
+                            <p className={css.commentText}>{comment.text}</p>
+                          </div>
+                          <span className={css.commentTime}>
+                            {getTimeAgo(comment.createdAt)}
                           </span>
-                          <p className={css.commentText}>{comment.text}</p>
-        
                         </div>
-                        <span className={css.commentTime}>
-                          {getTimeAgo(comment.createdAt)}
-                        </span>
-        
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <div className={css.noComments}>No comments yet</div>
                 )}

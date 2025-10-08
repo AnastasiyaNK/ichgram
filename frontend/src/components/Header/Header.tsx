@@ -7,20 +7,30 @@ import exploreIcon from "../../assets/images/explore.svg";
 import messagesIcon from "../../assets/images/messenger.svg";
 import notificationsIcon from "../../assets/images/notifications.svg";
 import createIcon from "../../assets/images/create.svg";
-import placeholderAvatar from "../../assets/images/border-avatar.svg";
+
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { useState } from "react";
 import CreatePostModal from "../Modal/CreatePostModal";
+import NotificationPanel from "../NotificationPanel/NotificationPanel";
+import { getUserAvatar } from "../../utils/avatarGenerator";
 
 const Header = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   const openCreateModal = () => setIsCreateModalOpen(true);
   const closeCreateModal = () => setIsCreateModalOpen(false);
+  const closeNotifications = () => setIsNotificationsOpen(false);
+
+    const toggleNotifications = () => {
+      setIsNotificationsOpen((prev) => !prev);
+    };
+  
+  const userAvatar = getUserAvatar(user);
 
   return (
     <>
@@ -83,14 +93,12 @@ const Header = () => {
 
             <li className={css.navItem}>
               <img className={css.icon} src={notificationsIcon} alt="" />
-              <NavLink
-                to="/notifications"
-                className={({ isActive }) =>
-                  isActive ? css.activeLink : css.link
-                }
+              <button
+                onClick={toggleNotifications}
+                className={css.notificationButton}
               >
                 Notifications
-              </NavLink>
+              </button>
             </li>
 
             <li className={css.navItem}>
@@ -110,15 +118,10 @@ const Header = () => {
         </nav>
 
         <div className={css.profileWrapper}>
-          <img
-            className={css.avatar}
-            src={user?.profileImage || placeholderAvatar}
-            alt="avatar"
-          />
+          <img className={css.avatar} src={userAvatar} alt="avatar" />
           <NavLink
             to={user ? `/profile/${user._id}` : "/login"}
             className={({ isActive }) => (isActive ? css.activeLink : css.link)}
-           
           >
             Profile
           </NavLink>
@@ -129,6 +132,10 @@ const Header = () => {
         isOpen={isCreateModalOpen}
         onClose={closeCreateModal}
         onPostCreated={() => console.log("Post created from header!")}
+      />
+      <NotificationPanel
+        isOpen={isNotificationsOpen}
+        onClose={closeNotifications}
       />
     </>
   );

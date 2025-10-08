@@ -7,7 +7,6 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import CreatePage from "./pages/CreatePage/CreatePage";
 import MessagesPage from "./pages/MessagesPages/MessagesPages";
-import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ExplorePage from "./pages/ExplorePage/ExplorePage";
@@ -36,7 +35,6 @@ const App: React.FC = () => {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/messages" element={<MessagesPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/create" element={<CreatePage />} />
 
           {/* 🔹 власний профіль */}

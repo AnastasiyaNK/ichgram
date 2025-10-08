@@ -10,13 +10,13 @@ import {
 } from "../../redux/followApiSlice";
 import type { RootState } from "../../redux/store";
 import css from "./ProfilePage.module.css";
-import placeholderAvatar from "../../assets/images/border-avatar.svg";
 import createIcon from "../../assets/images/create.svg";
 import { Button, message } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import PostView from "../../components/Posts/PostView";
 import CreatePostModal from "../../components/Modal/CreatePostModal";
 import type { IPost } from "../../utils/types";
+import { getUserAvatar } from "../../utils/avatarGenerator";
 
 
 
@@ -112,6 +112,7 @@ const ProfilePage: React.FC = () => {
     refetchPosts();
     message.success("Post created successfully!");
   };
+  const userAvatar = getUserAvatar(user);
 
   if (userLoading || postsLoading)
     return (
@@ -131,11 +132,7 @@ const ProfilePage: React.FC = () => {
     <div className={css.profilePage}>
       <header className={css.profileHeader}>
         <div className={css.avatarSection}>
-          <img
-            src={user.profileImage || placeholderAvatar}
-            alt={user.name}
-            className={css.avatar}
-          />
+          <img src={userAvatar} alt={user.name} className={css.avatar} />
         </div>
 
         <div className={css.profileInfo}>

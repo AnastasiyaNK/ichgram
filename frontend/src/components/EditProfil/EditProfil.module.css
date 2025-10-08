@@ -21,8 +21,11 @@ color: #000;
   
 }
 .useravatar {
-  width: 56px;
-  height: 56px;
+ width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 .textName{
 font-weight: 700;

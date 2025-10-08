@@ -34,3 +34,33 @@ export interface IComment {
   createdAt?: string;
   updatedAt?: string;
 }
+
+
+// export interface INotification {
+//   _id: string;
+//   recipient: string; 
+//   sender: User; 
+//   type: "like" | "comment" | "follow";
+//   post?: string; 
+//   text?: string; 
+//   read: boolean;
+//   createdAt: string;
+//   updatedAt?: string;
+// }
+
+export interface INotification {
+  _id: string;
+  type: "like" | "comment" | "follow";
+  sender: {
+    _id: string;
+    name: string;
+    profileImage?: string;
+  };
+  post?: {
+    _id: string;
+    image?: string;
+    description?: string;
+  };
+  read: boolean;
+  createdAt: string;
+}

@@ -13,66 +13,63 @@ import redHeartIcon from "../../assets/images/heart_red.png";
 import comment from "../../assets/images/comment.svg";
 import type { RootState } from "../../redux/store";
 import type { IPost } from "../../utils/types";
+import { getUserAvatar } from "../../utils/avatarGenerator";
+import PostView from "./PostView";
 
 interface AllPostsFeedProps {
   post: IPost;
-  onLike?: (postId: string) => void;
 }
 
-const AllPostsFeed: React.FC<AllPostsFeedProps> = ({ post, onLike }) => {
+const AllPostsFeed: React.FC<AllPostsFeedProps> = ({ post }) => {
   const navigate = useNavigate();
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const currentUser = useSelector((state: RootState) => state.auth.user);
   const currentUserId = currentUser?._id || currentUser?.id;
+
+  // 🔹 локальний стан поста для швидкого оновлення
+  const [localPost, setLocalPost] = useState(post);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isPostViewOpen, setIsPostViewOpen] = useState(false);
 
   const [likePost] = useLikePostMutation();
   const [unlikePost] = useUnlikePostMutation();
 
-  const isLikedByCurrentUser =
-    post.likes?.includes(currentUserId || "") || false;
-  const likesCount = post.likes?.length || 0;
+  const isLikedByCurrentUser = localPost.likes.includes(currentUserId || "");
+  const likesCount = localPost.likes.length;
 
-
-  const author = post.author || {
+  const author = localPost.author || {
     _id: "unknown",
     name: "Unknown User",
     profileImage: null,
   };
-  const authorName = author.name || "Unknown User";
-  // const authorId = author._id || "unknown";
-  const authorProfileImage = author.profileImage || placeholderAvatar;
+  const authorProfileImage = getUserAvatar(author);
 
-  const handleToggleText = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const handleToggleText = () => setIsExpanded((prev) => !prev);
 
   const handleLikeToggle = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (!currentUserId) return;
 
-    if (!currentUserId) {
-      console.log("User must be logged in to like posts");
-      return;
-    }
+    // 🔹 Оптимістичне оновлення (без очікування відповіді від сервера)
+    const updatedLikes = isLikedByCurrentUser
+      ? localPost.likes.filter((id) => id !== currentUserId)
+      : [...localPost.likes, currentUserId];
+
+    setLocalPost({ ...localPost, likes: updatedLikes });
 
     try {
       if (isLikedByCurrentUser) {
-        await unlikePost(post._id).unwrap();
+        await unlikePost(localPost._id).unwrap();
       } else {
-        await likePost(post._id).unwrap();
-      }
-      if (onLike) {
-        onLike(post._id);
+        await likePost(localPost._id).unwrap();
       }
     } catch (error) {
       console.error("Error toggling like:", error);
+      setLocalPost(post);
     }
   };
 
-
   const handleUserClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!author._id) return;
     navigate(`/profile/${author._id}`);
   };
 
@@ -81,61 +78,82 @@ const AllPostsFeed: React.FC<AllPostsFeedProps> = ({ post, onLike }) => {
     navigate("/messages");
   };
 
+  const handlePostClick = () => setIsPostViewOpen(true);
+  const handleClosePostView = () => setIsPostViewOpen(false);
+
   return (
-    <article className={styles.postCard}>
-      <header className={styles.postHeader} onClick={handleUserClick}>
-        <img
-          className={styles.userAvatar}
-          src={authorProfileImage}
-          alt={`${authorName} avatar`}
-        />
-        <div className={styles.userInfo}>
-          <p className={styles.username}>{authorName}</p>
-          <span className={styles.dot}>•</span>
-          <p className={styles.postTime}>{getTimeAgo(post.createdAt)}</p>
-        </div>
-      </header>
+    <>
+      <article className={styles.postCard} onClick={handlePostClick}>
+        <header className={styles.postHeader} onClick={handleUserClick}>
+          <img
+            className={styles.userAvatar}
+            src={authorProfileImage || placeholderAvatar}
+            alt={author.name}
+          />
+          <div className={styles.userInfo}>
+            <p className={styles.username}>{author.name}</p>
+            <span className={styles.dot}>•</span>
+            <p className={styles.postTime}>{getTimeAgo(localPost.createdAt)}</p>
+          </div>
+        </header>
 
-      <div className={styles.postImage}>
-        <img src={post.image || placeholderAvatar} alt="post content" />
-      </div>
-
-      <footer className={styles.postFooter}>
-        <div className={styles.postActions}>
-          <button className={styles.likeButton} onClick={handleLikeToggle}>
-            <img src={isLikedByCurrentUser ? redHeartIcon : heart} alt="like" />
-          </button>
-          <button className={styles.messageButton} onClick={handleMessageClick}>
-            <img src={comment} alt="message" />
-          </button>
+        <div className={styles.postImage}>
+          <img src={localPost.image || placeholderAvatar} alt="post content" />
         </div>
 
-        <div className={styles.likesCount}>
-          <p>{likesCount} likes</p>
-        </div>
-
-        <div className={styles.postCaption}>
-          <span className={styles.captionUsername}>{authorName}</span>
-          <span
-            className={`${styles.captionText} ${
-              isExpanded ? styles.expanded : ""
-            }`}
-          >
-            {post.description}
-          </span>
-          {post.description && post.description.length > 60 && (
-            <button className={styles.moreButton} onClick={handleToggleText}>
-              {isExpanded ? " less" : " more"}
+        <footer className={styles.postFooter}>
+          <div className={styles.postActions}>
+            <button className={styles.likeButton} onClick={handleLikeToggle}>
+              <img
+                src={isLikedByCurrentUser ? redHeartIcon : heart}
+                alt="like"
+              />
             </button>
-          )}
-        </div>
+            <button
+              className={styles.messageButton}
+              onClick={handleMessageClick}
+            >
+              <img src={comment} alt="message" />
+            </button>
+          </div>
 
-        <div className={styles.commentsPreview}>
-          <p>View all comments</p>
-        </div>
-      </footer>
-    </article>
+          <div className={styles.likesCount}>
+            <p>{likesCount} likes</p>
+          </div>
+
+          {localPost.description && (
+            <div className={styles.postCaption}>
+              <span className={styles.captionUsername}>{author.name}</span>
+              <span
+                className={`${styles.captionText} ${
+                  isExpanded ? styles.expanded : ""
+                }`}
+              >
+                {localPost.description}
+              </span>
+              {localPost.description.length > 60 && (
+                <button
+                  className={styles.moreButton}
+                  onClick={handleToggleText}
+                >
+                  {isExpanded ? " less" : " more"}
+                </button>
+              )}
+            </div>
+          )}
+        </footer>
+      </article>
+
+      {isPostViewOpen && (
+        <PostView
+          post={localPost}
+          currentUser={currentUser}
+          onClose={handleClosePostView}
+        />
+      )}
+    </>
   );
 };
 
 export default AllPostsFeed;
+

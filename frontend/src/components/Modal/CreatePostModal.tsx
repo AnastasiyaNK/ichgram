@@ -6,7 +6,7 @@ import { useState } from "react";
 import MessageInput from "../../ui/MessageInput";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
-import placeholderAvatar from "../../assets/images/border-avatar.svg";
+import { getUserAvatar } from "../../utils/avatarGenerator";
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -118,6 +118,8 @@ const CreatePostModal = ({
     </div>
   );
 
+  const userAvatar = getUserAvatar(currentUser);
+
   return (
     <Modal
       open={isOpen}
@@ -145,9 +147,7 @@ const CreatePostModal = ({
         </div>
       </div>
 
-  
       <div className={css.wrapper}>
-      
         <div className={css.leftBox}>
           {imageUrl ? (
             <img src={imageUrl} alt="upload" className={css.uploadedImage} />
@@ -165,18 +165,15 @@ const CreatePostModal = ({
           )}
         </div>
 
-    
         <div className={css.rightBox}>
-      
           <div className={css.userInfo}>
             <img
               className={css.avatar}
-              src={currentUser?.profileImage || placeholderAvatar}
+              src={userAvatar}
               alt={currentUser?.name || "Username"}
             />
             <p>{currentUser?.name || "Username"}</p>
           </div>
-
 
           <textarea
             className={css.textarea}
@@ -186,7 +183,6 @@ const CreatePostModal = ({
             rows={8}
           />
 
-        
           <div className={css.messageInputContainer}>
             <MessageInput onSend={handleSend} />
           </div>

@@ -35,6 +35,18 @@
   padding-bottom: 61px; 
 }
 
+.notificationButton{
+  border: none;
+  background: transparent;
+   font-size: 12px;
+  line-height: 1.33;
+  color: #737373;
+  text-decoration: none;
+
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
 @media (max-width: 768px) {
   .navList {
     gap: 16px;

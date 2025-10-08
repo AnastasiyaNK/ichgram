@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
 import css from './Footer.module.css'
+import { useState } from 'react';
+import NotificationPanel from '../NotificationPanel/NotificationPanel';
 
 const Footer = () => {
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const closeNotifications = () => setIsNotificationsOpen(false);
+   const toggleNotifications = () => {
+     setIsNotificationsOpen((prev) => !prev);
+   };
   return (
     <div className={css.footer}>
       <div className={css.navList}>
@@ -18,9 +25,14 @@ const Footer = () => {
           {" "}
           Messages
         </Link>
-        <Link className={css.navLink} to="/notifications">
-          Notifications
-        </Link>
+        
+          <button
+            onClick={toggleNotifications}
+            className={css.notificationButton}
+          >
+            Notifications
+          </button>
+       
         <Link className={css.navLink} to="/create">
           Create
         </Link>
@@ -28,6 +40,11 @@ const Footer = () => {
       <div>
         <p className={css.ant}>© 2024 ICHgram</p>
       </div>
+
+      <NotificationPanel
+              isOpen={isNotificationsOpen}
+              onClose={closeNotifications}
+            />
     </div>
   );
 }

@@ -5,8 +5,8 @@ import cloudinary from "../config/cloudinary.js";
 const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
-    // Перевіряємо, чи це аватар чи пост
-    let folder = "avatars"; // за замовчуванням
+   
+    let folder = "avatars"; 
     if (req.originalUrl.includes("/posts")) {
       folder = "posts";
     }
@@ -14,7 +14,7 @@ const storage = new CloudinaryStorage({
     return {
       folder,
       public_id: `${Date.now()}-${file.originalname}`,
-      resource_type: "auto", // підтримка будь-якого типу файлів
+      resource_type: "auto", 
     };
   },
 });

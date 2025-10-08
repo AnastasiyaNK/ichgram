@@ -14,7 +14,6 @@ const likeSchema = new mongoose.Schema<ILike>(
   { timestamps: true }
 );
 
-// Один користувач не може лайкнути один пост двічі
 likeSchema.index({ user: 1, post: 1 }, { unique: true });
 
 const Like = mongoose.model<ILike>("Like", likeSchema);
