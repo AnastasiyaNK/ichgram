@@ -1,7 +1,7 @@
 import { Modal, Button, Upload, message } from "antd";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import css from "./CreatePostModal.module.css";
+import style from "./CreatePostModal.module.css";
 import { useState } from "react";
 import MessageInput from "../../ui/MessageInput";
 import { useSelector } from "react-redux";
@@ -112,9 +112,9 @@ const CreatePostModal = ({
   };
 
   const uploadButton = (
-    <div className={css.uploadPlaceholder}>
-      <CloudDownloadOutlined className={css.uploadIcon} />
-      <div className={css.uploadText}>Upload photo</div>
+    <div className={style.uploadPlaceholder}>
+      <CloudDownloadOutlined className={style.uploadIcon} />
+      <div className={style.uploadText}>Upload photo</div>
     </div>
   );
 
@@ -127,30 +127,30 @@ const CreatePostModal = ({
       footer={null}
       width={914}
       centered
-      className={css.modal}
+      className={style.modal}
       closeIcon={null}
       maskClosable={true}
     >
       {/* Header */}
-      <div className={css.hederBox}>
-        <h2 className={css.title}>Create new post</h2>
-        <div className={css.headerButtons}>
+      <div className={style.hederBox}>
+        <h2 className={style.title}>Create new post</h2>
+        <div className={style.headerButtons}>
           <Button
             type="text"
             onClick={handlePublish}
             loading={loading}
             disabled={!imageUrl}
-            className={css.shareButton}
+            className={style.shareButton}
           >
             Share
           </Button>
         </div>
       </div>
 
-      <div className={css.wrapper}>
-        <div className={css.leftBox}>
+      <div className={style.wrapper}>
+        <div className={style.leftBox}>
           {imageUrl ? (
-            <img src={imageUrl} alt="upload" className={css.uploadedImage} />
+            <img src={imageUrl} alt="upload" className={style.uploadedImage} />
           ) : (
             <Upload
               name="postImage"
@@ -158,17 +158,17 @@ const CreatePostModal = ({
               beforeUpload={beforeUpload}
               onChange={handleChange}
               accept="image/*"
-              className={css.uploadArea}
+              className={style.uploadArea}
             >
               {uploadButton}
             </Upload>
           )}
         </div>
 
-        <div className={css.rightBox}>
-          <div className={css.userInfo}>
+        <div className={style.rightBox}>
+          <div className={style.userInfo}>
             <img
-              className={css.avatar}
+              className={style.avatar}
               src={userAvatar}
               alt={currentUser?.name || "Username"}
             />
@@ -176,14 +176,14 @@ const CreatePostModal = ({
           </div>
 
           <textarea
-            className={css.textarea}
+            className={style.textarea}
             placeholder="Write a caption..."
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             rows={8}
           />
 
-          <div className={css.messageInputContainer}>
+          <div className={style.messageInputContainer}>
             <MessageInput onSend={handleSend} />
           </div>
         </div>

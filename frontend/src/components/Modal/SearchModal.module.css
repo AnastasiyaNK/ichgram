@@ -10,9 +10,9 @@
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
   overflow-y: auto;
   z-index: 1000;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
 }
 
 .overlay {
@@ -27,12 +27,8 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .header {
@@ -44,18 +40,10 @@
 }
 
 .title {
-  margin: 0;
-  font-weight: 700;
   font-size: 24px;
-  line-height: 1.25;
-  color: #000;
+  font-weight: 700;
 }
 
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 .closeBtn {
   background: none;
   border: none;
@@ -63,97 +51,81 @@
   cursor: pointer;
 }
 
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 16px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.searchBox {
+  padding: 12px 0;
 }
 
-.notificationItem {
+.results {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.userList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.userItem {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
   gap: 12px;
   padding: 10px;
   border-radius: 8px;
-  transition: background 0.2s ease;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.notificationItem:hover {
-  background-color: #fafafa;
-}
-
-.notificationContent {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  flex: 1;
+.userItem:hover {
+  background-color: #f7f7f7;
 }
 
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
 }
 
-.textBlock {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.text {
+.name {
+  font-weight: 600;
+  color: #000;
   margin: 0;
+}
+
+.fullName {
   font-size: 14px;
-  color: #262626;
-  line-height: 1.4;
+  color: #777;
+  margin: 0;
 }
 
-.time {
-  font-size: 12px;
-  color: #8e8e8e;
-  margin-top: 4px;
-}
-
-.postPreview {
-  flex-shrink: 0;
-  margin-left: 8px;
-}
-
-.postImage {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
-  object-fit: cover;
-  border: 1px solid #dbdbdb;
-}
-
-.read {
-  opacity: 0.7;
-}
-
-.unread {
-  background-color: #f9fbff;
-}
-
-.noNotifications {
+.noResults,
+.hint {
   text-align: center;
-  color: #8e8e8e;
+  color: #888;
   margin-top: 50px;
 }
 
-.loaderContainer {
+.loader {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 200px;
 }
+.customSearchInput {
+  background-color: #efefef; 
+  border: none;              
+  border-radius: 12px;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+.customSearchInput:focus {
+  box-shadow: none;
+  border: none;
+}
+
+
 
 @media (max-width: 768px) {
   .panel {
@@ -161,24 +133,14 @@
     width: 60%;
     border-radius: 0;
   }
-
   .overlay {
     left: 0;
   }
-
-  .notificationItem {
-    flex-direction: row;
-  }
-
-  .postPreview {
-    margin-left: 0;
-    margin-top: 8px;
-  }
 }
+
 @media (max-width: 480px) {
   .panel {
     left: 0;
     width: 100%;
-    border-radius: 0;
   }
 }

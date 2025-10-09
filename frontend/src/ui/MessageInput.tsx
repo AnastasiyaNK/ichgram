@@ -4,7 +4,7 @@ import { Input, Button } from "antd";
 import { SmileOutlined, SendOutlined } from "@ant-design/icons";
 import EmojiPicker from "emoji-picker-react";
 import type { EmojiClickData } from "emoji-picker-react";
-import css from './MessageInput.module.css';
+import style from "./MessageInput.module.css";
 
 interface MessageInputProps {
   onSend: (text: string) => void;
@@ -38,10 +38,10 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
   };
 
   return (
-    <div className={css.messageInputContainer}>
+    <div className={style.messageInputContainer}>
       {/* Emoji Picker */}
       {showEmojiPicker && (
-        <div className={css.emojiPickerWrapper}>
+        <div className={style.emojiPickerWrapper}>
           <EmojiPicker 
             onEmojiClick={handleEmojiSelect}
             width={280}
@@ -51,13 +51,12 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         </div>
       )}
 
-      {/* Compact Input Area */}
-      <div className={css.inputWrapper}>
+      <div className={style.inputWrapper}>
         <Button 
           type="text"
           icon={<SmileOutlined />} 
           onClick={toggleEmojiPicker}
-          className={css.emojiButton}
+          className={style.emojiButton}
         />
         
         <Input.TextArea
@@ -67,7 +66,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Add a comment..."
           onKeyPress={handleKeyPress}
-          className={css.textArea}
+          className={style.textArea}
         />
         
         <Button 
@@ -75,7 +74,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
           icon={<SendOutlined />} 
           onClick={handleSend}
           disabled={!message.trim()}
-          className={css.sendButton}
+          className={style.sendButton}
         />
       </div>
     </div>

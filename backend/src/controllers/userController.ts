@@ -36,7 +36,7 @@ export const updateProfile = async (req: Request, res: Response) => {
 export const getUserProfile = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
-    console.log("Getting public profile for user ID:", userId);
+
 
     const user = await User.findById(userId)
       .select("-password -email") 

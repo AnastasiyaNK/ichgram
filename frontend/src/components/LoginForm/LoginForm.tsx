@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../redux/authSlice";
 import type { AppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
-import css from "./LoginForm.module.css";
+import style from "./LoginForm.module.css";
 import logoXl from "../../assets/images/logoXl.png";
 import { Link } from "react-router-dom";
 
@@ -42,14 +42,14 @@ const LoginForm: React.FC = () => {
 
   return (
     <div>
-      <div className={css.login}>
-        <div className={css.logoWrapper}>
-          <img className={css.logo} src={logoXl} alt="logo" />
+      <div className={style .login}>
+        <div className={style .logoWrapper}>
+          <img className={style .logo} src={logoXl} alt="logo" />
         </div>
-        <form className={css.registerForm} onSubmit={handleSubmit}>
-          <div className={css.inputWrapper}>
+        <form className={style .registerForm} onSubmit={handleSubmit}>
+          <div className={style .inputWrapper}>
             <input
-              className={css.registerinput}
+              className={style .registerinput}
               type="email"
               placeholder="Email"
               value={email}
@@ -58,7 +58,7 @@ const LoginForm: React.FC = () => {
               required
             />
             <input
-              className={css.registerinput}
+              className={style.registerinput}
               type="password"
               placeholder="Password"
               value={password}
@@ -68,29 +68,29 @@ const LoginForm: React.FC = () => {
             />
           </div>
 
-          {error && <p className={css.errorMsg}>{error}</p>}
+          {error && <p className={style.errorMsg}>{error}</p>}
 
-          <button className={css.signUpBtn} type="submit" disabled={isLoading}>
+          <button className={style.signUpBtn} type="submit" disabled={isLoading}>
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
 
-        <div className={css.divider}>
-          <span className={css.line}></span>
-          <span className={css.text}>OR</span>
-          <span className={css.line}></span>
+        <div className={style.divider}>
+          <span className={style.line}></span>
+          <span className={style.text}>OR</span>
+          <span className={style.line}></span>
         </div>
 
-        <div className={css.forgotPassWrapper}>
-          <Link className={css.forgotPassLink} to="/reset">
+        <div className={style.forgotPassWrapper}>
+          <Link className={style.forgotPassLink} to="/reset">
             Forgot password?
           </Link>
         </div>
       </div>
 
-      <div className={css.goLinkWrapper}>
-        <p className={css.goLinkText}>Don't have an account?</p>
-        <Link className={css.goToLink} to="/register">
+      <div className={style.goLinkWrapper}>
+        <p className={style.goLinkText}>Don't have an account?</p>
+        <Link className={style.goToLink} to="/register">
           Sign up
         </Link>
       </div>

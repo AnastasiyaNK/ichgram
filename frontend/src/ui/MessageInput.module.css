@@ -81,7 +81,7 @@
   cursor: not-allowed;
 }
 
-/* Стилі для EmojiPicker */
+
 .messageInputContainer :global(.EmojiPickerReact) {
   --epr-emoji-size: 20px;
   --epr-category-label-height: 25px;

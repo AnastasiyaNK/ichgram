@@ -1,4 +1,3 @@
-// utils/avatarGenerator.ts
 export type AvatarStyle = "initials" | "shapes" | "lorelei";
 
 export function generateAvatarPlaceholder(

@@ -21,16 +21,15 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
 }) => {
   const { data: notifications, isLoading } = useGetNotificationsQuery();
   const [markAllRead] = useMarkAllReadMutation();
-    const [markAsRead] = useMarkAsReadMutation();
-    
-      useEffect(() => {
-        if (isOpen) {
-          document.body.style.overflow = "hidden";
-        } else {
-          document.body.style.overflow = "auto";
-        }
-      }, [isOpen]);
+  const [markAsRead] = useMarkAsReadMutation();
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen]);
 
   const unreadCount = notifications?.filter((n) => !n.read).length || 0;
 
@@ -85,9 +84,9 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
               </Button>
             )}
             {onClose && (
-              <Button type="text" size="small" onClick={onClose}>
-                Close
-              </Button>
+              <button className={styles.closeBtn} onClick={onClose}>
+                ✕
+              </button>
             )}
           </div>
         </div>

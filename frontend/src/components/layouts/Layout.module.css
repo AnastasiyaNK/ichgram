@@ -55,7 +55,7 @@
   .content {
     width: 100%;
     padding: 16px;
-    min-height: calc(100vh - 60px); 
+    /* min-height: calc(100vh - 60px);  */
   }
   
   .footerWrap {
@@ -93,7 +93,7 @@
 
   .content {
     padding: 12px;
-    min-height: calc(100vh - 56px);
+    /* min-height: calc(100vh - 56px); */
   }
   
   .footerWrap {

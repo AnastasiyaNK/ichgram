@@ -43,6 +43,9 @@ export const apiSlice = createApi({
     getCurrentUser: builder.query<User, void>({
       query: () => "/auth/me",
     }),
+    getSearchUsers: builder.query<User[], string>({
+      query: (q) => `/search/users?q=${encodeURIComponent(q)}`,
+    }),
   }),
 });
 
@@ -52,4 +55,6 @@ export const {
   useGetProfileQuery,
   useUpdateProfileMutation,
   useGetCurrentUserQuery,
+  useGetSearchUsersQuery
+  
 } = apiSlice;

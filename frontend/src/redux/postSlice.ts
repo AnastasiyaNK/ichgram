@@ -78,6 +78,28 @@ export const postApiSlice = createApi({
         { type: "Comments", id: postId },
       ],
     }),
+    getExplorePosts: builder.query<IPost[], void>({
+      query: () => "/explore",
+      providesTags: ["Posts"],
+    }),
+   
+    deletePost: builder.mutation<{ success: boolean }, string>({
+      query: (postId) => ({
+        url: `/posts/${postId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+    }),
+
+   
+    updatePost: builder.mutation<IPost, { id: string; formData: FormData }>({
+      query: ({ id, formData }) => ({
+        url: `/posts/${id}`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Posts", id }],
+    }),
   }),
 });
 
@@ -89,5 +111,9 @@ export const {
   useUnlikePostMutation,
   useGetCommentsQuery,
   useAddCommentMutation,
+  useGetExplorePostsQuery,
+  useDeletePostMutation,
+ useUpdatePostMutation
+  
 } = postApiSlice;
 

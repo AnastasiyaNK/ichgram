@@ -9,7 +9,7 @@ import {
   useGetFollowStatusQuery,
 } from "../../redux/followApiSlice";
 import type { RootState } from "../../redux/store";
-import css from "./ProfilePage.module.css";
+import style from "./ProfilePage.module.css";
 import createIcon from "../../assets/images/create.svg";
 import { Button, message } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
@@ -116,33 +116,33 @@ const ProfilePage: React.FC = () => {
 
   if (userLoading || postsLoading)
     return (
-      <div className={css.loadingContainer}>
-        <p className={css.loading}>Loading profile...</p>
+      <div className={style.loadingContainer}>
+        <p className={style.loading}>Loading profile...</p>
       </div>
     );
 
   if (userError || !user)
     return (
-      <div className={css.errorContainer}>
-        <p className={css.error}>User not found</p>
+      <div className={style.errorContainer}>
+        <p className={style.error}>User not found</p>
       </div>
     );
 
   return (
-    <div className={css.profilePage}>
-      <header className={css.profileHeader}>
-        <div className={css.avatarSection}>
-          <img src={userAvatar} alt={user.name} className={css.avatar} />
+    <div className={style.profilePage}>
+      <header className={style.profileHeader}>
+        <div className={style.avatarSection}>
+          <img src={userAvatar} alt={user.name} className={style.avatar} />
         </div>
 
-        <div className={css.profileInfo}>
-          <div className={css.usernameSection}>
-            <h1 className={css.username}>{user.name}</h1>
+        <div className={style.profileInfo}>
+          <div className={style.usernameSection}>
+            <h1 className={style.username}>{user.name}</h1>
 
             {isOwnProfile ? (
               <>
                 <button
-                  className={css.editButton}
+                  className={style.editButton}
                   onClick={() => navigate("/profile/edit")}
                 >
                   Edit Profile
@@ -156,17 +156,17 @@ const ProfilePage: React.FC = () => {
                 </Button>
               </>
             ) : (
-              <div className={css.actionButtons}>
+              <div className={style.actionButtons}>
                 <button
-                  className={`${css.followButton} ${
-                    isFollowing ? css.following : ""
+                  className={`${style.followButton} ${
+                    isFollowing ? style.following : ""
                   }`}
                   onClick={handleFollowToggle}
                 >
                   {isFollowing ? "Unfollow" : "Follow"}
                 </button>
                 <button
-                  className={css.messageButton}
+                  className={style.messageButton}
                   onClick={handleMessageClick}
                 >
                   Message
@@ -175,32 +175,32 @@ const ProfilePage: React.FC = () => {
             )}
           </div>
 
-          <div className={css.statsSection}>
-            <span className={css.stat}>
+          <div className={style.statsSection}>
+            <span className={style.stat}>
               <strong>{posts.length}</strong> posts
             </span>
-            <span className={css.stat}>
+            <span className={style.stat}>
               <strong>{user.followersCount || 0}</strong> followers
             </span>
-            <span className={css.stat}>
+            <span className={style.stat}>
               <strong>{user.followingCount || 0}</strong> following
             </span>
           </div>
 
-          <div className={css.bioSection}>
-            <p className={css.fullName}>{user.fullName}</p>
-            <p className={css.bio}>{user.bio || "No bio yet"}</p>
+          <div className={style.bioSection}>
+            <p className={style.fullName}>{user.fullName}</p>
+            <p className={style.bio}>{user.bio || "No bio yet"}</p>
           </div>
         </div>
       </header>
 
-      <section className={css.postsSection}>
+      <section className={style.postsSection}>
         {posts.length > 0 ? (
-          <div className={css.postsGrid}>
+          <div className={style.postsGrid}>
             {posts.map((post) => (
               <div
                 key={post._id}
-                className={css.postItem}
+                className={style.postItem}
                 onClick={() => handlePostClick(post)}
               >
                 <img src={post.image} alt="Post" />
@@ -208,12 +208,12 @@ const ProfilePage: React.FC = () => {
             ))}
           </div>
         ) : isOwnProfile ? (
-          <div className={css.createPostWrapper} onClick={openModal}>
-            <img className={css.icon} src={createIcon} alt="Create post" />
-            <span className={css.link}>Create new post</span>
+          <div className={style.createPostWrapper} onClick={openModal}>
+            <img className={style.icon} src={createIcon} alt="Create post" />
+            <span className={style.link}>Create new post</span>
           </div>
         ) : (
-          <p className={css.noPosts}>No posts yet</p>
+          <p className={style.noPosts}>No posts yet</p>
         )}
       </section>
 

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import css from "./Header.module.css";
+import style from "./Header.module.css";
 import logoIcon from "../../assets/images/ichgram.png";
 import homeIcon from "../../assets/images/home.svg";
 import searchIcon from "../../assets/images/search-ich.svg";
@@ -14,6 +14,7 @@ import { useState } from "react";
 import CreatePostModal from "../Modal/CreatePostModal";
 import NotificationPanel from "../NotificationPanel/NotificationPanel";
 import { getUserAvatar } from "../../utils/avatarGenerator";
+import SearchModal from "../Modal/SearchModal";
 
 const Header = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -21,6 +22,7 @@ const Header = () => {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const openCreateModal = () => setIsCreateModalOpen(true);
   const closeCreateModal = () => setIsCreateModalOpen(false);
@@ -34,82 +36,80 @@ const Header = () => {
 
   return (
     <>
-      <div className={css.header}>
-        <div className={css.logoWrapp}>
+      <div className={style .header}>
+        <div className={style .logoWrapp}>
           <NavLink to="/home">
-            <img className={css.logo} src={logoIcon} alt="logo" />
+            <img className={style .logo} src={logoIcon} alt="logo" />
           </NavLink>
         </div>
 
-        <nav className={css.nav}>
-          <ul className={css.listNav}>
-            <li className={css.navItem}>
-              <img className={css.icon} src={homeIcon} alt="" />
+        <nav className={style .nav}>
+          <ul className={style .listNav}>
+            <li className={style .navItem}>
+              <img className={style .icon} src={homeIcon} alt="" />
               <NavLink
                 to="/home"
                 className={({ isActive }) =>
-                  isActive ? css.activeLink : css.link
+                  isActive ? style .activeLink : style .link
                 }
               >
                 Home
               </NavLink>
             </li>
 
-            <li className={css.navItem}>
-              <img className={css.icon} src={searchIcon} alt="" />
-              <NavLink
-                to="/search"
-                className={({ isActive }) =>
-                  isActive ? css.activeLink : css.link
-                }
+            <li className={style .navItem}>
+              <img className={style .icon} src={searchIcon} alt="" />
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className={style .notificationButton}
               >
                 Search
-              </NavLink>
+              </button>
             </li>
 
-            <li className={css.navItem}>
-              <img className={css.icon} src={exploreIcon} alt="" />
+            <li className={style .navItem}>
+              <img className={style .icon} src={exploreIcon} alt="" />
               <NavLink
                 to="/explore"
                 className={({ isActive }) =>
-                  isActive ? css.activeLink : css.link
+                  isActive ? style .activeLink : style .link
                 }
               >
                 Explore
               </NavLink>
             </li>
 
-            <li className={css.navItem}>
-              <img className={css.icon} src={messagesIcon} alt="messages" />
+            <li className={style .navItem}>
+              <img className={style .icon} src={messagesIcon} alt="messages" />
               <NavLink
                 to="/messages"
                 className={({ isActive }) =>
-                  isActive ? css.activeLink : css.link
+                  isActive ? style .activeLink : style .link
                 }
               >
                 Messages
               </NavLink>
             </li>
 
-            <li className={css.navItem}>
-              <img className={css.icon} src={notificationsIcon} alt="" />
+            <li className={style .navItem}>
+              <img className={style .icon} src={notificationsIcon} alt="" />
               <button
                 onClick={toggleNotifications}
-                className={css.notificationButton}
+                className={style .notificationButton}
               >
                 Notifications
               </button>
             </li>
 
-            <li className={css.navItem}>
-              <img className={css.icon} src={createIcon} alt="" />
+            <li className={style .navItem}>
+              <img className={style .icon} src={createIcon} alt="" />
               <NavLink
                 to="#"
                 onClick={(e) => {
                   e.preventDefault();
                   openCreateModal();
                 }}
-                className={css.link}
+                className={style .link}
               >
                 Create
               </NavLink>
@@ -117,11 +117,11 @@ const Header = () => {
           </ul>
         </nav>
 
-        <div className={css.profileWrapper}>
-          <img className={css.avatar} src={userAvatar} alt="avatar" />
+        <div className={style .profileWrapper}>
+          <img className={style .avatar} src={userAvatar} alt="avatar" />
           <NavLink
             to={user ? `/profile/${user._id}` : "/login"}
-            className={({ isActive }) => (isActive ? css.activeLink : css.link)}
+            className={({ isActive }) => (isActive ? style .activeLink : style .link)}
           >
             Profile
           </NavLink>
@@ -136,6 +136,10 @@ const Header = () => {
       <NotificationPanel
         isOpen={isNotificationsOpen}
         onClose={closeNotifications}
+      />
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
       />
     </>
   );

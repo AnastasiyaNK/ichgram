@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetPostsQuery } from "../../redux/postSlice";
-import css from "./HomePage.module.css";
+import style from "./HomePage.module.css";
 import AllPostsFeed from "../../components/Posts/AllPostsFeed";
 import type { IPost } from "../../utils/types";
 
@@ -27,17 +27,17 @@ const HomePage: React.FC = () => {
 
   if (postsLoading) {
     return (
-      <div className={css.loadingContainer}>
-        <div className={css.loading}>Loading posts...</div>
+      <div className={style.loadingContainer}>
+        <div className={style.loading}>Loading posts...</div>
       </div>
     );
   }
 
   if (postsError) {
     return (
-      <div className={css.errorContainer}>
-        <div className={css.error}>Error loading posts</div>
-        <button onClick={handleRefresh} className={css.retryButton}>
+      <div className={style.errorContainer}>
+        <div className={style.error}>Error loading posts</div>
+        <button onClick={handleRefresh} className={style.retryButton}>
           Try again
         </button>
       </div>
@@ -45,8 +45,8 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className={css.allPostsPage}>
-      <div className={css.postsGrid}>
+    <div className={style.allPostsPage}>
+      <div className={style.postsGrid}>
         {sortedPosts.length > 0 ? (
           sortedPosts.map((post) => (
             <AllPostsFeed 
@@ -56,9 +56,9 @@ const HomePage: React.FC = () => {
             />
           ))
         ) : (
-          <div className={css.noPosts}>
+          <div className={style.noPosts}>
             <p>No posts available</p>
-            <button onClick={handleRefresh} className={css.refreshButton}>
+            <button onClick={handleRefresh} className={style.refreshButton}>
               Refresh
             </button>
           </div>

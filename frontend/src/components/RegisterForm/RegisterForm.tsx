@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../redux/authSlice";
 import type { AppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
-import css from "./RegisterForm.module.css";
+import style from "./RegisterForm.module.css";
 import logoXl from "../../assets/images/logoXl.png";
 import { Link } from "react-router-dom";
 
@@ -45,17 +45,17 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div>
-      <div className={css.register}>
-        <div className={css.logoWrapper}>
-          <img className={css.logo} src={logoXl} alt="logo" />
-          <h2 className={css.logoTitle}>
+      <div className={style.register}>
+        <div className={style.logoWrapper}>
+          <img className={style.logo} src={logoXl} alt="logo" />
+          <h2 className={style.logoTitle}>
             Sign up to see photos and videos from your friends.
           </h2>
         </div>
-        <form className={css.registerForm} onSubmit={handleSubmit}>
-          <div className={css.inputWrapper}>
+        <form className={style.registerForm} onSubmit={handleSubmit}>
+          <div className={style.inputWrapper}>
             <input
-              className={css.registerinput}
+              className={style.registerinput}
               type="email"
               placeholder="Email"
               value={email}
@@ -64,7 +64,7 @@ const RegisterForm: React.FC = () => {
               required
             />
             <input
-              className={css.registerinput}
+              className={style.registerinput}
               type="text"
               placeholder="Full Name"
               value={fullName}
@@ -73,7 +73,7 @@ const RegisterForm: React.FC = () => {
               required
             />
             <input
-              className={css.registerinput}
+              className={style.registerinput}
               type="text"
               placeholder="Username"
               value={name}
@@ -82,7 +82,7 @@ const RegisterForm: React.FC = () => {
               required
             />
             <input
-              className={css.registerinput}
+              className={style.registerinput}
               type="password"
               placeholder="Password"
               value={password}
@@ -92,17 +92,17 @@ const RegisterForm: React.FC = () => {
             />
           </div>
 
-          {error && <p className={css.errorMsg}>{error}</p>}
+          {error && <p className={style.errorMsg}>{error}</p>}
 
-          <button className={css.signUpBtn} type="submit" disabled={isLoading}>
+          <button className={style.signUpBtn} type="submit" disabled={isLoading}>
             {isLoading ? "Loading..." : "Sign Up"}
           </button>
         </form>
       </div>
 
-      <div className={css.goLoginWrapper}>
-        <p className={css.goLoginText}>Have an account?</p>
-        <Link className={css.goLoginLink} to="/login">
+      <div className={style.goLoginWrapper}>
+        <p className={style.goLoginText}>Have an account?</p>
+        <Link className={style.goLoginLink} to="/login">
           Log in
         </Link>
       </div>

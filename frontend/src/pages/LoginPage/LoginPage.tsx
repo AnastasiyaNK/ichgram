@@ -1,15 +1,15 @@
 import LoginForm from "../../components/LoginForm/LoginForm"
 import heroIcon from '../../assets/images/background.png'
-import css from './LoginPage.module.css'
+import style from "./LoginPage.module.css";
 
 
 const LoginPage = () => {
   return (
-    <section className={css.loginContainer}>
-      <div className={css.heroIconWrapper}>
+    <section className={style.loginContainer}>
+      <div className={style.heroIconWrapper}>
         <img src={heroIcon} alt="" />
       </div>
-      <div className={css.logoFormWrapper}>
+      <div className={style.logoFormWrapper}>
         <LoginForm />
       </div>
     </section>

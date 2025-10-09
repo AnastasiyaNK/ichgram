@@ -35,19 +35,6 @@ export interface IComment {
   updatedAt?: string;
 }
 
-
-// export interface INotification {
-//   _id: string;
-//   recipient: string; 
-//   sender: User; 
-//   type: "like" | "comment" | "follow";
-//   post?: string; 
-//   text?: string; 
-//   read: boolean;
-//   createdAt: string;
-//   updatedAt?: string;
-// }
-
 export interface INotification {
   _id: string;
   type: "like" | "comment" | "follow";

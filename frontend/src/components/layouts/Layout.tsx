@@ -3,23 +3,23 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import css from "./Layout.module.css";
+import style from "./Layout.module.css";
 
 const Layout: React.FC = () => {
   return (
-    <div className={css.page}>
-      <div className={css.mainRow}>
-        <aside className={css.sidebar}>
+    <div className={style .page}>
+      <div className={style .mainRow}>
+        <aside className={style .sidebar}>
           <Header />
         </aside>
 
-        <main className={css.content}>
+        <main className={style .content}>
           <Outlet />
         </main>
       </div>
 
-      <div className={css.footerWrap}>
-        <div className={css.footerContainer}>
+      <div className={style .footerWrap}>
+        <div className={style .footerContainer}>
           <Footer />
         </div>
       </div>
